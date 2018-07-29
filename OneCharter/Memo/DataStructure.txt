@@ -7,7 +7,8 @@ ChartFile: chart 및 기타 메타데이터
 			- uint offset: offset in ms from previous TimingSegment
 			- List<Measure>: 한 마디
 				- int quantBeat
-				- int size
+				- int groupBeats
+				- int totalBeats
 				- List<Element>: 안에 들어있는 것들
 
 Element: 한 순간에 처리하는 것들
@@ -16,9 +17,9 @@ Element: 한 순간에 처리하는 것들
 			GCShortNote: 그루브코스터의 숏노트
 				- 노트 애니메이션에 대한 정보
 				- 노트 모양에 대한 정보
-				GCNormalNote: 일반 노트
-				GCLargeNote: 큰 노트
-				GCSlideNote: 슬라이드 노트
-				GCDoubleSlideNote: 동시 슬라이드 노트
+				GCTapNote: 일반 노트
+				GCDualTapNote: 큰 노트
+				GCFlickNote: 슬라이드 노트
+				GCDualFlickNote: 동시 슬라이드 노트
 				GCAdlibNote: 보이지 않지만 처리할 수 있는 노트
 		LongNote: 홀드 노트

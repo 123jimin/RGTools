@@ -7,7 +7,7 @@ using RGData;
 
 namespace OneCharter {
     /// <summary>Represents a specific location in the chart.</summary>
-    sealed class ChartTime {
+    public sealed class ChartTime {
         private double currentTime = 0.0d;
         /// <summary>Deviation from currentBeat.</summary>
         private double beatOffset = 0.0d;
@@ -80,13 +80,15 @@ namespace OneCharter {
                 beatOffset = 0.0d;
             } else {
                 if (currentMeasureIndex == LAST_SECTION) {
-
+                    currentMeasureIndex = currentSegment.Measures.Count;
+                    currentBeat = -1;
                 } else if (currentMeasureIndex == OFFSET_SECTION) {
-
+                    currentMeasureIndex = 0;
+                    currentBeat = -1;
                 } else {
                     currentBeat--;
-                    HandleBeatUnderflow();
                 }
+                HandleBeatUnderflow();
             }
             RecomputeCurrentTime();
         }
@@ -101,7 +103,7 @@ namespace OneCharter {
         /// Note: this method assumes that beatOffset is set to zero.</summary>
         private void HandleBeatOverflow() {
             if (currentMeasureIndex < 0) return;
-            if (currentMeasure != null && currentBeat >= currentMeasure.Size) {
+            if (currentMeasure != null && currentBeat >= currentMeasure.TotalBeats) {
                 // Next measure
                 currentBeat = 0;
                 currentMeasureIndex++;
@@ -160,7 +162,7 @@ namespace OneCharter {
                 }
                 if (currentMeasureIndex >= 0) {
                     currentMeasure = currentSegment.Measures[currentMeasureIndex];
-                    currentBeat = currentMeasure.Size - 1;
+                    currentBeat = currentMeasure.TotalBeats - 1;
                 } else {
                     currentMeasure = null;
                     currentBeat = 0;
@@ -188,7 +190,7 @@ namespace OneCharter {
                 if (currentMeasure == null) return true;
                 if (currentMeasureIndex >= currentSegment.Measures.Count) return true;
                 if (!ReferenceEquals(currentSegment.Measures[currentMeasureIndex], currentMeasure)) return true;
-                if (beatOffset >= currentMeasure.Size) return true;
+                if (beatOffset >= currentMeasure.TotalBeats) return true;
             }
             return false;
         }
