@@ -1,0 +1,774 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AF1747BE-443C-4604-8FE1-14C2D25343C4}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>OneCharter</RootNamespace>
+    <AssemblyName>OneCharter</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ChartTime.cs" />
+    <Compile Include="EditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditorForm.Designer.cs">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditView.Render.cs" />
+    <Compile Include="EditView.cs" />
+    <Compile Include="HotKey.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sprite.cs" />
+    <Compile Include="Timing\HexaTimer.cs" />
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditorForm.resx">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Sprites\GC\NormalNote.png" />
+    <Content Include="Memo\Plan.txt" />
+    <Content Include="Resources\Icons\abacus.png" />
+    <Content Include="Resources\Icons\absolute-position.png" />
+    <Content Include="Resources\Icons\academy-cap.png" />
+    <Content Include="Resources\Icons\accessibility.png" />
+    <Content Include="Resources\Icons\accordion-menu.png" />
+    <Content Include="Resources\Icons\add-dock.png" />
+    <Content Include="Resources\Icons\adjust.png" />
+    <Content Include="Resources\Icons\adobe-flash.png" />
+    <Content Include="Resources\Icons\airplane.png" />
+    <Content Include="Resources\Icons\alarm.png" />
+    <Content Include="Resources\Icons\align-center.png" />
+    <Content Include="Resources\Icons\align-justify.png" />
+    <Content Include="Resources\Icons\align-left.png" />
+    <Content Include="Resources\Icons\align-right.png" />
+    <Content Include="Resources\Icons\alt-a.png" />
+    <Content Include="Resources\Icons\alt.png" />
+    <Content Include="Resources\Icons\ambulance.png" />
+    <Content Include="Resources\Icons\anchor.png" />
+    <Content Include="Resources\Icons\angle-double-down.png" />
+    <Content Include="Resources\Icons\angle-double-left.png" />
+    <Content Include="Resources\Icons\angle-double-right.png" />
+    <Content Include="Resources\Icons\angle-double-up.png" />
+    <Content Include="Resources\Icons\angle-down.png" />
+    <Content Include="Resources\Icons\angle-left.png" />
+    <Content Include="Resources\Icons\angle-right.png" />
+    <Content Include="Resources\Icons\angle-up.png" />
+    <Content Include="Resources\Icons\archive.png" />
+    <Content Include="Resources\Icons\archives.png" />
+    <Content Include="Resources\Icons\area-select.png" />
+    <Content Include="Resources\Icons\arrow-backward.png" />
+    <Content Include="Resources\Icons\arrow-circle-down-o.png" />
+    <Content Include="Resources\Icons\arrow-circle-down.png" />
+    <Content Include="Resources\Icons\arrow-circle-left-o.png" />
+    <Content Include="Resources\Icons\arrow-circle-left.png" />
+    <Content Include="Resources\Icons\arrow-circle-right-o.png" />
+    <Content Include="Resources\Icons\arrow-circle-right.png" />
+    <Content Include="Resources\Icons\arrow-circle-up-o.png" />
+    <Content Include="Resources\Icons\arrow-circle-up.png" />
+    <Content Include="Resources\Icons\arrow-down.png" />
+    <Content Include="Resources\Icons\arrow-forward.png" />
+    <Content Include="Resources\Icons\arrow-left.png" />
+    <Content Include="Resources\Icons\arrow-long-down.png" />
+    <Content Include="Resources\Icons\arrow-long-left.png" />
+    <Content Include="Resources\Icons\arrow-right.png" />
+    <Content Include="Resources\Icons\arrow-up.png" />
+    <Content Include="Resources\Icons\arrows-cross.png" />
+    <Content Include="Resources\Icons\arrows-long-h.png" />
+    <Content Include="Resources\Icons\arrows-long-right.png" />
+    <Content Include="Resources\Icons\arrows-long-up.png" />
+    <Content Include="Resources\Icons\arrows-long-v.png" />
+    <Content Include="Resources\Icons\arrows.png" />
+    <Content Include="Resources\Icons\asterisk.png" />
+    <Content Include="Resources\Icons\at.png" />
+    <Content Include="Resources\Icons\automation.png" />
+    <Content Include="Resources\Icons\backspace-a.png" />
+    <Content Include="Resources\Icons\backspace.png" />
+    <Content Include="Resources\Icons\backwards.png" />
+    <Content Include="Resources\Icons\ban.png" />
+    <Content Include="Resources\Icons\bar-chart-h.png" />
+    <Content Include="Resources\Icons\bar-chart-v.png" />
+    <Content Include="Resources\Icons\bar-chart.png" />
+    <Content Include="Resources\Icons\barcode.png" />
+    <Content Include="Resources\Icons\bed.png" />
+    <Content Include="Resources\Icons\bell-o.png" />
+    <Content Include="Resources\Icons\bell-slash-o.png" />
+    <Content Include="Resources\Icons\bell-slash.png" />
+    <Content Include="Resources\Icons\bell.png" />
+    <Content Include="Resources\Icons\boat.png" />
+    <Content Include="Resources\Icons\bold.png" />
+    <Content Include="Resources\Icons\bolt.png" />
+    <Content Include="Resources\Icons\bomb.png" />
+    <Content Include="Resources\Icons\book-dollar.png" />
+    <Content Include="Resources\Icons\book-percent.png" />
+    <Content Include="Resources\Icons\book.png" />
+    <Content Include="Resources\Icons\bookmark-o.png" />
+    <Content Include="Resources\Icons\bookmark.png" />
+    <Content Include="Resources\Icons\briefcase.png" />
+    <Content Include="Resources\Icons\browser.png" />
+    <Content Include="Resources\Icons\bug-o.png" />
+    <Content Include="Resources\Icons\bug.png" />
+    <Content Include="Resources\Icons\building-o.png" />
+    <Content Include="Resources\Icons\building.png" />
+    <Content Include="Resources\Icons\bullets.png" />
+    <Content Include="Resources\Icons\bullseye.png" />
+    <Content Include="Resources\Icons\buss.png" />
+    <Content Include="Resources\Icons\button.png" />
+    <Content Include="Resources\Icons\calc-book.png" />
+    <Content Include="Resources\Icons\calc.png" />
+    <Content Include="Resources\Icons\calendar-briefcase.png" />
+    <Content Include="Resources\Icons\calendar-clock.png" />
+    <Content Include="Resources\Icons\calendar-envelope.png" />
+    <Content Include="Resources\Icons\calendar-o.png" />
+    <Content Include="Resources\Icons\calendar-user.png" />
+    <Content Include="Resources\Icons\calendar.png" />
+    <Content Include="Resources\Icons\camera.png" />
+    <Content Include="Resources\Icons\car.png" />
+    <Content Include="Resources\Icons\caret-down.png" />
+    <Content Include="Resources\Icons\caret-left.png" />
+    <Content Include="Resources\Icons\caret-right.png" />
+    <Content Include="Resources\Icons\caret-square-down-o.png" />
+    <Content Include="Resources\Icons\caret-square-left-o.png" />
+    <Content Include="Resources\Icons\caret-square-right-o.png" />
+    <Content Include="Resources\Icons\caret-square-up-o.png" />
+    <Content Include="Resources\Icons\caret-up.png" />
+    <Content Include="Resources\Icons\cart-o.png" />
+    <Content Include="Resources\Icons\cart.png" />
+    <Content Include="Resources\Icons\cash.png" />
+    <Content Include="Resources\Icons\chart-3d.png" />
+    <Content Include="Resources\Icons\chart-grid.png" />
+    <Content Include="Resources\Icons\chart-line.png" />
+    <Content Include="Resources\Icons\chart-timeline.png" />
+    <Content Include="Resources\Icons\chart.png" />
+    <Content Include="Resources\Icons\chat.png" />
+    <Content Include="Resources\Icons\check-circle-o.png" />
+    <Content Include="Resources\Icons\check-circle.png" />
+    <Content Include="Resources\Icons\check-square-o.png" />
+    <Content Include="Resources\Icons\check-square.png" />
+    <Content Include="Resources\Icons\check.png" />
+    <Content Include="Resources\Icons\chevron-circle-down-o.png" />
+    <Content Include="Resources\Icons\chevron-circle-down.png" />
+    <Content Include="Resources\Icons\chevron-circle-left-o.png" />
+    <Content Include="Resources\Icons\chevron-circle-left.png" />
+    <Content Include="Resources\Icons\chevron-circle-right-o.png" />
+    <Content Include="Resources\Icons\chevron-circle-right.png" />
+    <Content Include="Resources\Icons\chevron-circle-up-o.png" />
+    <Content Include="Resources\Icons\chevron-circle-up.png" />
+    <Content Include="Resources\Icons\chevron-down-small.png" />
+    <Content Include="Resources\Icons\chevron-down.png" />
+    <Content Include="Resources\Icons\chevron-left-small.png" />
+    <Content Include="Resources\Icons\chevron-left.png" />
+    <Content Include="Resources\Icons\chevron-right-small.png" />
+    <Content Include="Resources\Icons\chevron-right.png" />
+    <Content Include="Resources\Icons\chevron-up-small.png" />
+    <Content Include="Resources\Icons\chevron-up.png" />
+    <Content Include="Resources\Icons\child.png" />
+    <Content Include="Resources\Icons\circle-thin.png" />
+    <Content Include="Resources\Icons\circle.png" />
+    <Content Include="Resources\Icons\clipboard-check.png" />
+    <Content Include="Resources\Icons\clipboard-cross.png" />
+    <Content Include="Resources\Icons\clipboard-heart.png" />
+    <Content Include="Resources\Icons\clipboard-pulse.png" />
+    <Content Include="Resources\Icons\clipboard-text.png" />
+    <Content Include="Resources\Icons\clipboard-user.png" />
+    <Content Include="Resources\Icons\clipboard.png" />
+    <Content Include="Resources\Icons\clock.png" />
+    <Content Include="Resources\Icons\close-big.png" />
+    <Content Include="Resources\Icons\close-circle-o.png" />
+    <Content Include="Resources\Icons\close-circle.png" />
+    <Content Include="Resources\Icons\close-small.png" />
+    <Content Include="Resources\Icons\close.png" />
+    <Content Include="Resources\Icons\cloud-download-o.png" />
+    <Content Include="Resources\Icons\cloud-download.png" />
+    <Content Include="Resources\Icons\cloud-o.png" />
+    <Content Include="Resources\Icons\cloud-upload-o.png" />
+    <Content Include="Resources\Icons\cloud-upload.png" />
+    <Content Include="Resources\Icons\cloud.png" />
+    <Content Include="Resources\Icons\cluster.png" />
+    <Content Include="Resources\Icons\code.png" />
+    <Content Include="Resources\Icons\coffee.png" />
+    <Content Include="Resources\Icons\cog-o.png" />
+    <Content Include="Resources\Icons\cog.png" />
+    <Content Include="Resources\Icons\cogs.png" />
+    <Content Include="Resources\Icons\coin-piles.png" />
+    <Content Include="Resources\Icons\coins.png" />
+    <Content Include="Resources\Icons\combobox.png" />
+    <Content Include="Resources\Icons\comment-ellipsis-o.png" />
+    <Content Include="Resources\Icons\comment-ellipsis.png" />
+    <Content Include="Resources\Icons\comment-o.png" />
+    <Content Include="Resources\Icons\comment.png" />
+    <Content Include="Resources\Icons\comments-o.png" />
+    <Content Include="Resources\Icons\comments.png" />
+    <Content Include="Resources\Icons\compile.png" />
+    <Content Include="Resources\Icons\compress-square.png" />
+    <Content Include="Resources\Icons\compress.png" />
+    <Content Include="Resources\Icons\connect-o.png" />
+    <Content Include="Resources\Icons\connect.png" />
+    <Content Include="Resources\Icons\controller.png" />
+    <Content Include="Resources\Icons\copy-o.png" />
+    <Content Include="Resources\Icons\copy.png" />
+    <Content Include="Resources\Icons\copyright.png" />
+    <Content Include="Resources\Icons\corner-lower-left.png" />
+    <Content Include="Resources\Icons\corner-lower-right.png" />
+    <Content Include="Resources\Icons\corner-upper-left.png" />
+    <Content Include="Resources\Icons\corner-upper-right.png" />
+    <Content Include="Resources\Icons\credit-card.png" />
+    <Content Include="Resources\Icons\crop.png" />
+    <Content Include="Resources\Icons\cross-cutlery.png" />
+    <Content Include="Resources\Icons\crosshairs.png" />
+    <Content Include="Resources\Icons\css.png" />
+    <Content Include="Resources\Icons\ctrl-a.png" />
+    <Content Include="Resources\Icons\ctrl.png" />
+    <Content Include="Resources\Icons\cube.png" />
+    <Content Include="Resources\Icons\cubes.png" />
+    <Content Include="Resources\Icons\curly-brackets.png" />
+    <Content Include="Resources\Icons\cursor-o.png" />
+    <Content Include="Resources\Icons\cursor.png" />
+    <Content Include="Resources\Icons\cutlery.png" />
+    <Content Include="Resources\Icons\dashboard.png" />
+    <Content Include="Resources\Icons\database.png" />
+    <Content Include="Resources\Icons\date-input.png" />
+    <Content Include="Resources\Icons\deindent.png" />
+    <Content Include="Resources\Icons\del-a.png" />
+    <Content Include="Resources\Icons\del.png" />
+    <Content Include="Resources\Icons\dental-chair.png" />
+    <Content Include="Resources\Icons\desktop.png" />
+    <Content Include="Resources\Icons\diamond-o.png" />
+    <Content Include="Resources\Icons\diamond.png" />
+    <Content Include="Resources\Icons\diploma-scroll.png" />
+    <Content Include="Resources\Icons\diploma.png" />
+    <Content Include="Resources\Icons\disc.png" />
+    <Content Include="Resources\Icons\doctor-briefcase.png" />
+    <Content Include="Resources\Icons\doctor.png" />
+    <Content Include="Resources\Icons\dollar.png" />
+    <Content Include="Resources\Icons\dot-circle.png" />
+    <Content Include="Resources\Icons\download-alt.png" />
+    <Content Include="Resources\Icons\download.png" />
+    <Content Include="Resources\Icons\drop.png" />
+    <Content Include="Resources\Icons\edit.png" />
+    <Content Include="Resources\Icons\eject.png" />
+    <Content Include="Resources\Icons\elastic.png" />
+    <Content Include="Resources\Icons\ellipsis-circle-o.png" />
+    <Content Include="Resources\Icons\ellipsis-circle.png" />
+    <Content Include="Resources\Icons\ellipsis-dots-h.png" />
+    <Content Include="Resources\Icons\ellipsis-dots-v.png" />
+    <Content Include="Resources\Icons\ellipsis-h.png" />
+    <Content Include="Resources\Icons\ellipsis-v.png" />
+    <Content Include="Resources\Icons\enter-arrow.png" />
+    <Content Include="Resources\Icons\enter.png" />
+    <Content Include="Resources\Icons\envelope-o.png" />
+    <Content Include="Resources\Icons\envelope-open-o.png" />
+    <Content Include="Resources\Icons\envelope-open.png" />
+    <Content Include="Resources\Icons\envelope.png" />
+    <Content Include="Resources\Icons\envelopes-o.png" />
+    <Content Include="Resources\Icons\envelopes.png" />
+    <Content Include="Resources\Icons\eraser.png" />
+    <Content Include="Resources\Icons\esc-a.png" />
+    <Content Include="Resources\Icons\esc.png" />
+    <Content Include="Resources\Icons\euro.png" />
+    <Content Include="Resources\Icons\exchange.png" />
+    <Content Include="Resources\Icons\exclamation-circle-o.png" />
+    <Content Include="Resources\Icons\exclamation-circle.png" />
+    <Content Include="Resources\Icons\exclamation.png" />
+    <Content Include="Resources\Icons\exit-o.png" />
+    <Content Include="Resources\Icons\exit.png" />
+    <Content Include="Resources\Icons\expand-full.png" />
+    <Content Include="Resources\Icons\expand-square.png" />
+    <Content Include="Resources\Icons\expand.png" />
+    <Content Include="Resources\Icons\external-browser.png" />
+    <Content Include="Resources\Icons\external-link.png" />
+    <Content Include="Resources\Icons\eye-slash.png" />
+    <Content Include="Resources\Icons\eye.png" />
+    <Content Include="Resources\Icons\eyedropper.png" />
+    <Content Include="Resources\Icons\facebook-square.png" />
+    <Content Include="Resources\Icons\facebook.png" />
+    <Content Include="Resources\Icons\factory.png" />
+    <Content Include="Resources\Icons\family.png" />
+    <Content Include="Resources\Icons\fast-backward.png" />
+    <Content Include="Resources\Icons\fast-forward.png" />
+    <Content Include="Resources\Icons\female.png" />
+    <Content Include="Resources\Icons\file-add.png" />
+    <Content Include="Resources\Icons\file-code.png" />
+    <Content Include="Resources\Icons\file-font.png" />
+    <Content Include="Resources\Icons\file-movie.png" />
+    <Content Include="Resources\Icons\file-o.png" />
+    <Content Include="Resources\Icons\file-picture.png" />
+    <Content Include="Resources\Icons\file-presentation.png" />
+    <Content Include="Resources\Icons\file-process.png" />
+    <Content Include="Resources\Icons\file-refresh.png" />
+    <Content Include="Resources\Icons\file-remove.png" />
+    <Content Include="Resources\Icons\file-search.png" />
+    <Content Include="Resources\Icons\file-sound.png" />
+    <Content Include="Resources\Icons\file-start.png" />
+    <Content Include="Resources\Icons\file-table.png" />
+    <Content Include="Resources\Icons\file-text-o.png" />
+    <Content Include="Resources\Icons\file-text.png" />
+    <Content Include="Resources\Icons\file-tree-small.png" />
+    <Content Include="Resources\Icons\file-tree-sub.png" />
+    <Content Include="Resources\Icons\file-tree.png" />
+    <Content Include="Resources\Icons\file-zip.png" />
+    <Content Include="Resources\Icons\file.png" />
+    <Content Include="Resources\Icons\fill.png" />
+    <Content Include="Resources\Icons\film.png" />
+    <Content Include="Resources\Icons\filter.png" />
+    <Content Include="Resources\Icons\fire.png" />
+    <Content Include="Resources\Icons\flag-checkered.png" />
+    <Content Include="Resources\Icons\flag-o.png" />
+    <Content Include="Resources\Icons\flag.png" />
+    <Content Include="Resources\Icons\flash.png" />
+    <Content Include="Resources\Icons\flask.png" />
+    <Content Include="Resources\Icons\flight-landing.png" />
+    <Content Include="Resources\Icons\flight-takeoff.png" />
+    <Content Include="Resources\Icons\flip-h.png" />
+    <Content Include="Resources\Icons\flip-v.png" />
+    <Content Include="Resources\Icons\folder-add.png" />
+    <Content Include="Resources\Icons\folder-o.png" />
+    <Content Include="Resources\Icons\folder-open-o.png" />
+    <Content Include="Resources\Icons\folder-open.png" />
+    <Content Include="Resources\Icons\folder-remove.png" />
+    <Content Include="Resources\Icons\folder-search.png" />
+    <Content Include="Resources\Icons\folder.png" />
+    <Content Include="Resources\Icons\font.png" />
+    <Content Include="Resources\Icons\form.png" />
+    <Content Include="Resources\Icons\forward.png" />
+    <Content Include="Resources\Icons\frown-o.png" />
+    <Content Include="Resources\Icons\funcion.png" />
+    <Content Include="Resources\Icons\funnel.png" />
+    <Content Include="Resources\Icons\gamepad.png" />
+    <Content Include="Resources\Icons\gavel.png" />
+    <Content Include="Resources\Icons\gift.png" />
+    <Content Include="Resources\Icons\glass.png" />
+    <Content Include="Resources\Icons\glasses.png" />
+    <Content Include="Resources\Icons\globe-wire.png" />
+    <Content Include="Resources\Icons\globe.png" />
+    <Content Include="Resources\Icons\golf.png" />
+    <Content Include="Resources\Icons\google-plus-square.png" />
+    <Content Include="Resources\Icons\google-plus.png" />
+    <Content Include="Resources\Icons\grab.png" />
+    <Content Include="Resources\Icons\grid-bevel.png" />
+    <Content Include="Resources\Icons\grid-big-o.png" />
+    <Content Include="Resources\Icons\grid-big.png" />
+    <Content Include="Resources\Icons\grid-h.png" />
+    <Content Include="Resources\Icons\grid-small-o.png" />
+    <Content Include="Resources\Icons\grid-small.png" />
+    <Content Include="Resources\Icons\grid-v.png" />
+    <Content Include="Resources\Icons\grid.png" />
+    <Content Include="Resources\Icons\group.png" />
+    <Content Include="Resources\Icons\hammer.png" />
+    <Content Include="Resources\Icons\hand.png" />
+    <Content Include="Resources\Icons\handle-corner.png" />
+    <Content Include="Resources\Icons\hands-up.png" />
+    <Content Include="Resources\Icons\handshake.png" />
+    <Content Include="Resources\Icons\harddrive-o.png" />
+    <Content Include="Resources\Icons\harddrive.png" />
+    <Content Include="Resources\Icons\hash.png" />
+    <Content Include="Resources\Icons\header.png" />
+    <Content Include="Resources\Icons\headphones.png" />
+    <Content Include="Resources\Icons\headset.png" />
+    <Content Include="Resources\Icons\health-card.png" />
+    <Content Include="Resources\Icons\heart-o.png" />
+    <Content Include="Resources\Icons\heart.png" />
+    <Content Include="Resources\Icons\home-o.png" />
+    <Content Include="Resources\Icons\home.png" />
+    <Content Include="Resources\Icons\hospital.png" />
+    <Content Include="Resources\Icons\hourglass-empty.png" />
+    <Content Include="Resources\Icons\hourglass-end.png" />
+    <Content Include="Resources\Icons\hourglass-start.png" />
+    <Content Include="Resources\Icons\hourglass.png" />
+    <Content Include="Resources\Icons\inbox.png" />
+    <Content Include="Resources\Icons\indent.png" />
+    <Content Include="Resources\Icons\info-circle-o.png" />
+    <Content Include="Resources\Icons\info-circle.png" />
+    <Content Include="Resources\Icons\info.png" />
+    <Content Include="Resources\Icons\input.png" />
+    <Content Include="Resources\Icons\insert.png" />
+    <Content Include="Resources\Icons\institution.png" />
+    <Content Include="Resources\Icons\invoice.png" />
+    <Content Include="Resources\Icons\italic.png" />
+    <Content Include="Resources\Icons\key-o.png" />
+    <Content Include="Resources\Icons\key.png" />
+    <Content Include="Resources\Icons\keyboard-o.png" />
+    <Content Include="Resources\Icons\keyboard.png" />
+    <Content Include="Resources\Icons\laptop.png" />
+    <Content Include="Resources\Icons\layout.png" />
+    <Content Include="Resources\Icons\level-down-bold.png" />
+    <Content Include="Resources\Icons\level-down.png" />
+    <Content Include="Resources\Icons\level-left-bold.png" />
+    <Content Include="Resources\Icons\level-left.png" />
+    <Content Include="Resources\Icons\level-right-bold.png" />
+    <Content Include="Resources\Icons\level-right.png" />
+    <Content Include="Resources\Icons\level-up-bold.png" />
+    <Content Include="Resources\Icons\level-up.png" />
+    <Content Include="Resources\Icons\lifebuoy.png" />
+    <Content Include="Resources\Icons\lightbulb.png" />
+    <Content Include="Resources\Icons\line-bar-chart.png" />
+    <Content Include="Resources\Icons\line-chart.png" />
+    <Content Include="Resources\Icons\line-h.png" />
+    <Content Include="Resources\Icons\line-v.png" />
+    <Content Include="Resources\Icons\lines-list.png" />
+    <Content Include="Resources\Icons\lines.png" />
+    <Content Include="Resources\Icons\link.png" />
+    <Content Include="Resources\Icons\list-ol.png" />
+    <Content Include="Resources\Icons\list-select.png" />
+    <Content Include="Resources\Icons\list-ul.png" />
+    <Content Include="Resources\Icons\list.png" />
+    <Content Include="Resources\Icons\location-arrow-circle-o.png" />
+    <Content Include="Resources\Icons\location-arrow-circle.png" />
+    <Content Include="Resources\Icons\location-arrow.png" />
+    <Content Include="Resources\Icons\lock.png" />
+    <Content Include="Resources\Icons\magic.png" />
+    <Content Include="Resources\Icons\magnet.png" />
+    <Content Include="Resources\Icons\mailbox.png" />
+    <Content Include="Resources\Icons\male.png" />
+    <Content Include="Resources\Icons\map-marker.png" />
+    <Content Include="Resources\Icons\margin-bottom.png" />
+    <Content Include="Resources\Icons\margin-left.png" />
+    <Content Include="Resources\Icons\margin-right.png" />
+    <Content Include="Resources\Icons\margin-top.png" />
+    <Content Include="Resources\Icons\margin.png" />
+    <Content Include="Resources\Icons\medal.png" />
+    <Content Include="Resources\Icons\megafone.png" />
+    <Content Include="Resources\Icons\meh-o.png" />
+    <Content Include="Resources\Icons\menu.png" />
+    <Content Include="Resources\Icons\microphone.png" />
+    <Content Include="Resources\Icons\minus-circle-o.png" />
+    <Content Include="Resources\Icons\minus-circle.png" />
+    <Content Include="Resources\Icons\minus-square-o.png" />
+    <Content Include="Resources\Icons\minus.png" />
+    <Content Include="Resources\Icons\mobile-browser.png" />
+    <Content Include="Resources\Icons\mobile-retro.png" />
+    <Content Include="Resources\Icons\mobile.png" />
+    <Content Include="Resources\Icons\modal-list.png" />
+    <Content Include="Resources\Icons\modal.png" />
+    <Content Include="Resources\Icons\money-deposit.png" />
+    <Content Include="Resources\Icons\money-exchange.png" />
+    <Content Include="Resources\Icons\money-withdraw.png" />
+    <Content Include="Resources\Icons\money.png" />
+    <Content Include="Resources\Icons\moon-o.png" />
+    <Content Include="Resources\Icons\moon.png" />
+    <Content Include="Resources\Icons\morning.png" />
+    <Content Include="Resources\Icons\movie.png" />
+    <Content Include="Resources\Icons\music.png" />
+    <Content Include="Resources\Icons\mute.png" />
+    <Content Include="Resources\Icons\native-button.png" />
+    <Content Include="Resources\Icons\newspaper.png" />
+    <Content Include="Resources\Icons\notebook.png" />
+    <Content Include="Resources\Icons\nurse.png" />
+    <Content Include="Resources\Icons\office.png" />
+    <Content Include="Resources\Icons\open-book.png" />
+    <Content Include="Resources\Icons\option-a.png" />
+    <Content Include="Resources\Icons\option.png" />
+    <Content Include="Resources\Icons\options.png" />
+    <Content Include="Resources\Icons\orientation.png" />
+    <Content Include="Resources\Icons\out.png" />
+    <Content Include="Resources\Icons\outbox.png" />
+    <Content Include="Resources\Icons\package.png" />
+    <Content Include="Resources\Icons\padding-bottom.png" />
+    <Content Include="Resources\Icons\padding-left.png" />
+    <Content Include="Resources\Icons\padding-right.png" />
+    <Content Include="Resources\Icons\padding-top.png" />
+    <Content Include="Resources\Icons\padding.png" />
+    <Content Include="Resources\Icons\paint-roll.png" />
+    <Content Include="Resources\Icons\paintbrush.png" />
+    <Content Include="Resources\Icons\palete.png" />
+    <Content Include="Resources\Icons\panel.png" />
+    <Content Include="Resources\Icons\paperclip.png" />
+    <Content Include="Resources\Icons\paperplane-o.png" />
+    <Content Include="Resources\Icons\paperplane.png" />
+    <Content Include="Resources\Icons\paragraph.png" />
+    <Content Include="Resources\Icons\password.png" />
+    <Content Include="Resources\Icons\paste.png" />
+    <Content Include="Resources\Icons\pause.png" />
+    <Content Include="Resources\Icons\pencil.png" />
+    <Content Include="Resources\Icons\phone-landline.png" />
+    <Content Include="Resources\Icons\phone.png" />
+    <Content Include="Resources\Icons\picture.png" />
+    <Content Include="Resources\Icons\pie-bar-chart.png" />
+    <Content Include="Resources\Icons\pie-chart.png" />
+    <Content Include="Resources\Icons\piggy-bank-coin.png" />
+    <Content Include="Resources\Icons\piggy-bank.png" />
+    <Content Include="Resources\Icons\pill.png" />
+    <Content Include="Resources\Icons\pills.png" />
+    <Content Include="Resources\Icons\pin-post.png" />
+    <Content Include="Resources\Icons\pin.png" />
+    <Content Include="Resources\Icons\play-circle-o.png" />
+    <Content Include="Resources\Icons\play-circle.png" />
+    <Content Include="Resources\Icons\play.png" />
+    <Content Include="Resources\Icons\plug.png" />
+    <Content Include="Resources\Icons\plus-circle-o.png" />
+    <Content Include="Resources\Icons\plus-circle.png" />
+    <Content Include="Resources\Icons\plus-minus.png" />
+    <Content Include="Resources\Icons\plus-square-o.png" />
+    <Content Include="Resources\Icons\plus.png" />
+    <Content Include="Resources\Icons\pointer.png" />
+    <Content Include="Resources\Icons\power-off.png" />
+    <Content Include="Resources\Icons\presentation.png" />
+    <Content Include="Resources\Icons\print.png" />
+    <Content Include="Resources\Icons\progressbar.png" />
+    <Content Include="Resources\Icons\puzzle-piece.png" />
+    <Content Include="Resources\Icons\pyramid-chart.png" />
+    <Content Include="Resources\Icons\qrcode.png" />
+    <Content Include="Resources\Icons\question-circle-o.png" />
+    <Content Include="Resources\Icons\question-circle.png" />
+    <Content Include="Resources\Icons\question.png" />
+    <Content Include="Resources\Icons\quote-left.png" />
+    <Content Include="Resources\Icons\quote-right.png" />
+    <Content Include="Resources\Icons\random.png" />
+    <Content Include="Resources\Icons\raster-lower-left.png" />
+    <Content Include="Resources\Icons\raster.png" />
+    <Content Include="Resources\Icons\records.png" />
+    <Content Include="Resources\Icons\recycle.png" />
+    <Content Include="Resources\Icons\refresh.png" />
+    <Content Include="Resources\Icons\reply-all.png" />
+    <Content Include="Resources\Icons\reply.png" />
+    <Content Include="Resources\Icons\resize-h.png" />
+    <Content Include="Resources\Icons\resize-v.png" />
+    <Content Include="Resources\Icons\retweet.png" />
+    <Content Include="Resources\Icons\rhombus.png" />
+    <Content Include="Resources\Icons\road-branch.png" />
+    <Content Include="Resources\Icons\road-branches.png" />
+    <Content Include="Resources\Icons\road-split.png" />
+    <Content Include="Resources\Icons\road.png" />
+    <Content Include="Resources\Icons\rocket.png" />
+    <Content Include="Resources\Icons\rotate-left.png" />
+    <Content Include="Resources\Icons\rotate-right.png" />
+    <Content Include="Resources\Icons\rss-square.png" />
+    <Content Include="Resources\Icons\rss.png" />
+    <Content Include="Resources\Icons\safe-lock.png" />
+    <Content Include="Resources\Icons\safe.png" />
+    <Content Include="Resources\Icons\scale-unbalance.png" />
+    <Content Include="Resources\Icons\scale.png" />
+    <Content Include="Resources\Icons\scatter-chart.png" />
+    <Content Include="Resources\Icons\scissors.png" />
+    <Content Include="Resources\Icons\screwdriver.png" />
+    <Content Include="Resources\Icons\search-minus.png" />
+    <Content Include="Resources\Icons\search-plus.png" />
+    <Content Include="Resources\Icons\search.png" />
+    <Content Include="Resources\Icons\select.png" />
+    <Content Include="Resources\Icons\server.png" />
+    <Content Include="Resources\Icons\share-square.png" />
+    <Content Include="Resources\Icons\share.png" />
+    <Content Include="Resources\Icons\shield.png" />
+    <Content Include="Resources\Icons\shift-arrow.png" />
+    <Content Include="Resources\Icons\shift.png" />
+    <Content Include="Resources\Icons\shop.png" />
+    <Content Include="Resources\Icons\sign-in-alt.png" />
+    <Content Include="Resources\Icons\sign-in.png" />
+    <Content Include="Resources\Icons\sign-out-alt.png" />
+    <Content Include="Resources\Icons\sign-out.png" />
+    <Content Include="Resources\Icons\signal.png" />
+    <Content Include="Resources\Icons\sitemap.png" />
+    <Content Include="Resources\Icons\slider.png" />
+    <Content Include="Resources\Icons\sliders.png" />
+    <Content Include="Resources\Icons\smiley-o.png" />
+    <Content Include="Resources\Icons\sort.png" />
+    <Content Include="Resources\Icons\sound-disable.png" />
+    <Content Include="Resources\Icons\spark-line.png" />
+    <Content Include="Resources\Icons\specialist.png" />
+    <Content Include="Resources\Icons\spinner-arc.png" />
+    <Content Include="Resources\Icons\spinner-third.png" />
+    <Content Include="Resources\Icons\spinner.png" />
+    <Content Include="Resources\Icons\spline-area-chart.png" />
+    <Content Include="Resources\Icons\spline-chart.png" />
+    <Content Include="Resources\Icons\split-h.png" />
+    <Content Include="Resources\Icons\split-v.png" />
+    <Content Include="Resources\Icons\split.png" />
+    <Content Include="Resources\Icons\spoon.png" />
+    <Content Include="Resources\Icons\square-shadow.png" />
+    <Content Include="Resources\Icons\star-half-left-o.png" />
+    <Content Include="Resources\Icons\star-half-left.png" />
+    <Content Include="Resources\Icons\star-half-right-o.png" />
+    <Content Include="Resources\Icons\star-half-right.png" />
+    <Content Include="Resources\Icons\star-o.png" />
+    <Content Include="Resources\Icons\star.png" />
+    <Content Include="Resources\Icons\start-cog.png" />
+    <Content Include="Resources\Icons\step-backward.png" />
+    <Content Include="Resources\Icons\step-forward.png" />
+    <Content Include="Resources\Icons\stethoscope.png" />
+    <Content Include="Resources\Icons\stock.png" />
+    <Content Include="Resources\Icons\stop-cog.png" />
+    <Content Include="Resources\Icons\stop.png" />
+    <Content Include="Resources\Icons\stopwatch.png" />
+    <Content Include="Resources\Icons\storage.png" />
+    <Content Include="Resources\Icons\strikethrough.png" />
+    <Content Include="Resources\Icons\subscript.png" />
+    <Content Include="Resources\Icons\suitcase.png" />
+    <Content Include="Resources\Icons\sun-down.png" />
+    <Content Include="Resources\Icons\sun-o.png" />
+    <Content Include="Resources\Icons\sun-rise.png" />
+    <Content Include="Resources\Icons\superscript.png" />
+    <Content Include="Resources\Icons\sword.png" />
+    <Content Include="Resources\Icons\tab-a.png" />
+    <Content Include="Resources\Icons\tab.png" />
+    <Content Include="Resources\Icons\table.png" />
+    <Content Include="Resources\Icons\tablet.png" />
+    <Content Include="Resources\Icons\tabs.png" />
+    <Content Include="Resources\Icons\tag.png" />
+    <Content Include="Resources\Icons\tags.png" />
+    <Content Include="Resources\Icons\tasks.png" />
+    <Content Include="Resources\Icons\taxi.png" />
+    <Content Include="Resources\Icons\teeth.png" />
+    <Content Include="Resources\Icons\terminal.png" />
+    <Content Include="Resources\Icons\text-height.png" />
+    <Content Include="Resources\Icons\text-input.png" />
+    <Content Include="Resources\Icons\text-label.png" />
+    <Content Include="Resources\Icons\text-width.png" />
+    <Content Include="Resources\Icons\thin-square.png" />
+    <Content Include="Resources\Icons\thumbs-down-o.png" />
+    <Content Include="Resources\Icons\thumbs-down.png" />
+    <Content Include="Resources\Icons\thumbs-up-o.png" />
+    <Content Include="Resources\Icons\thumbs-up.png" />
+    <Content Include="Resources\Icons\ticket.png" />
+    <Content Include="Resources\Icons\time-backward.png" />
+    <Content Include="Resources\Icons\time-forward.png" />
+    <Content Include="Resources\Icons\timer.png" />
+    <Content Include="Resources\Icons\toolbox.png" />
+    <Content Include="Resources\Icons\tools.png" />
+    <Content Include="Resources\Icons\tooth.png" />
+    <Content Include="Resources\Icons\touch.png" />
+    <Content Include="Resources\Icons\train.png" />
+    <Content Include="Resources\Icons\trash.png" />
+    <Content Include="Resources\Icons\tree-table.png" />
+    <Content Include="Resources\Icons\trendind-down.png" />
+    <Content Include="Resources\Icons\trending-up.png" />
+    <Content Include="Resources\Icons\trophy.png" />
+    <Content Include="Resources\Icons\truck.png" />
+    <Content Include="Resources\Icons\twin-col-select.png" />
+    <Content Include="Resources\Icons\twitter-square.png" />
+    <Content Include="Resources\Icons\twitter.png" />
+    <Content Include="Resources\Icons\umbrella.png" />
+    <Content Include="Resources\Icons\underline.png" />
+    <Content Include="Resources\Icons\unlink.png" />
+    <Content Include="Resources\Icons\unlock.png" />
+    <Content Include="Resources\Icons\upload-alt.png" />
+    <Content Include="Resources\Icons\upload.png" />
+    <Content Include="Resources\Icons\user-card.png" />
+    <Content Include="Resources\Icons\user-check.png" />
+    <Content Include="Resources\Icons\user-clock.png" />
+    <Content Include="Resources\Icons\user-heart.png" />
+    <Content Include="Resources\Icons\user-star.png" />
+    <Content Include="Resources\Icons\user.png" />
+    <Content Include="Resources\Icons\users.png" />
+    <Content Include="Resources\Icons\vaadin-h.png" />
+    <Content Include="Resources\Icons\vaadin-v.png" />
+    <Content Include="Resources\Icons\viewport.png" />
+    <Content Include="Resources\Icons\vimeo-square.png" />
+    <Content Include="Resources\Icons\vimeo.png" />
+    <Content Include="Resources\Icons\volume-down.png" />
+    <Content Include="Resources\Icons\volume-off.png" />
+    <Content Include="Resources\Icons\volume-up.png" />
+    <Content Include="Resources\Icons\volume.png" />
+    <Content Include="Resources\Icons\wallet.png" />
+    <Content Include="Resources\Icons\warning.png" />
+    <Content Include="Resources\Icons\workplace.png" />
+    <Content Include="Resources\Icons\wrench.png" />
+    <Content Include="Resources\Icons\youtube-square.png" />
+    <Content Include="Resources\Icons\youtube.png" />
+    <Content Include="Resources\Sprites\GC\LargeNote.png" />
+    <Content Include="Memo\DataStructure.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1%28x86 및 x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RGData\RGData.csproj">
+      <Project>{8610ec63-d283-4cf2-8c65-cee83f567cba}</Project>
+      <Name>RGData</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
