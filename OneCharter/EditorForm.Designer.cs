@@ -23,8 +23,9 @@
         /// 이 메서드의 내용을 코드 편집기로 수정하지 마세요.
         /// </summary>
         private void InitializeComponent() {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditorForm));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.timeStatLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,9 +49,8 @@
             this.slideHoldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dualHoldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playStopButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.timeStatLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.aboutOneCharterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -61,12 +61,28 @@
             this.toolStripDropDownButton2,
             this.toolStripDropDownButton1,
             this.playStopButton,
-            this.toolStripButton1});
+            this.toolStripDropDownButton3});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(327, 25);
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip";
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.timeStatLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 553);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(327, 22);
+            this.statusStrip.TabIndex = 1;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // timeStatLabel
+            // 
+            this.timeStatLabel.Name = "timeStatLabel";
+            this.timeStatLabel.Size = new System.Drawing.Size(66, 17);
+            this.timeStatLabel.Text = "(Time Stat)";
             // 
             // toolStripDropDownButton2
             // 
@@ -167,68 +183,68 @@
             // tapToolStripMenuItem
             // 
             this.tapToolStripMenuItem.Name = "tapToolStripMenuItem";
-            this.tapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tapToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.tapToolStripMenuItem.Text = "Tap";
             this.tapToolStripMenuItem.Click += new System.EventHandler(this.tapToolStripMenuItem_Click);
             // 
             // dualTapToolStripMenuItem
             // 
             this.dualTapToolStripMenuItem.Name = "dualTapToolStripMenuItem";
-            this.dualTapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dualTapToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.dualTapToolStripMenuItem.Text = "Dual Tap";
             this.dualTapToolStripMenuItem.Click += new System.EventHandler(this.dualTapToolStripMenuItem_Click);
             // 
             // flickToolStripMenuItem
             // 
             this.flickToolStripMenuItem.Name = "flickToolStripMenuItem";
-            this.flickToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.flickToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.flickToolStripMenuItem.Text = "Flick";
             // 
             // dualFlickToolStripMenuItem
             // 
             this.dualFlickToolStripMenuItem.Name = "dualFlickToolStripMenuItem";
-            this.dualFlickToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dualFlickToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.dualFlickToolStripMenuItem.Text = "Dual Flick";
             // 
             // adlibToolStripMenuItem
             // 
             this.adlibToolStripMenuItem.Name = "adlibToolStripMenuItem";
-            this.adlibToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.adlibToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.adlibToolStripMenuItem.Text = "Ad-lib";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(127, 6);
             // 
             // holdToolStripMenuItem
             // 
             this.holdToolStripMenuItem.Name = "holdToolStripMenuItem";
-            this.holdToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.holdToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.holdToolStripMenuItem.Text = "Hold";
             // 
             // beatToolStripMenuItem
             // 
             this.beatToolStripMenuItem.Name = "beatToolStripMenuItem";
-            this.beatToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.beatToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.beatToolStripMenuItem.Text = "Beat";
             // 
             // scratchToolStripMenuItem
             // 
             this.scratchToolStripMenuItem.Name = "scratchToolStripMenuItem";
-            this.scratchToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.scratchToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.scratchToolStripMenuItem.Text = "Scratch";
             // 
             // slideHoldToolStripMenuItem
             // 
             this.slideHoldToolStripMenuItem.Name = "slideHoldToolStripMenuItem";
-            this.slideHoldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.slideHoldToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.slideHoldToolStripMenuItem.Text = "Slide Hold";
             // 
             // dualHoldToolStripMenuItem
             // 
             this.dualHoldToolStripMenuItem.Name = "dualHoldToolStripMenuItem";
-            this.dualHoldToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dualHoldToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.dualHoldToolStripMenuItem.Text = "Dual Hold";
             // 
             // playStopButton
@@ -240,31 +256,23 @@
             this.playStopButton.Text = "Play";
             this.playStopButton.Click += new System.EventHandler(this.playStopButton_Click);
             // 
-            // toolStripButton1
+            // toolStripDropDownButton3
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "About GCEditor";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.toolStripDropDownButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutOneCharterToolStripMenuItem});
+            this.toolStripDropDownButton3.Image = global::OneCharter.Properties.Resources.IconQuestion;
+            this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
+            this.toolStripDropDownButton3.Size = new System.Drawing.Size(61, 22);
+            this.toolStripDropDownButton3.Text = "&Help";
             // 
-            // statusStrip
+            // aboutOneCharterToolStripMenuItem
             // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.timeStatLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 553);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(327, 22);
-            this.statusStrip.TabIndex = 1;
-            this.statusStrip.Text = "statusStrip1";
-            // 
-            // timeStatLabel
-            // 
-            this.timeStatLabel.Name = "timeStatLabel";
-            this.timeStatLabel.Size = new System.Drawing.Size(66, 17);
-            this.timeStatLabel.Text = "(Time Stat)";
+            this.aboutOneCharterToolStripMenuItem.Image = global::OneCharter.Properties.Resources.IconInfo;
+            this.aboutOneCharterToolStripMenuItem.Name = "aboutOneCharterToolStripMenuItem";
+            this.aboutOneCharterToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.aboutOneCharterToolStripMenuItem.Text = "About OneCharter";
+            this.aboutOneCharterToolStripMenuItem.Click += new System.EventHandler(this.aboutOneCharterToolStripMenuItem_Click);
             // 
             // EditorForm
             // 
@@ -290,7 +298,6 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton playStopButton;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel timeStatLabel;
@@ -316,6 +323,8 @@
         private System.Windows.Forms.ToolStripMenuItem measureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem timingSegmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton3;
+        private System.Windows.Forms.ToolStripMenuItem aboutOneCharterToolStripMenuItem;
     }
 }
 

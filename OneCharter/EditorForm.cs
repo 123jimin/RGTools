@@ -44,7 +44,7 @@ namespace OneCharter {
         }
 
         #region Events
-        private void toolStripButton1_Click(object sender, EventArgs e) {
+        private void aboutOneCharterToolStripMenuItem_Click(object sender, EventArgs e) {
             AboutBox aboutBox = new AboutBox();
             aboutBox.ShowDialog(this);
         }
@@ -59,8 +59,11 @@ namespace OneCharter {
 
         private void EditorForm_KeyDown(object sender, KeyEventArgs e) {
             switch (e.KeyCode) {
-                case HotKey.TOGGLE_PLAY:
+                case HotKey.TogglePlay:
                     TogglePlay();
+                    break;
+                case HotKey.Delete:
+
                     break;
                 case Keys.Down:
                     editView.MovePast();
@@ -79,7 +82,6 @@ namespace OneCharter {
             // TODO: Ask to save an unsaved file
             Application.Exit();
         }
-        #endregion
 
         private void tapToolStripMenuItem_Click(object sender, EventArgs e) {
             editView.AddElement(new RGData.GC.GCTapNote(0));
@@ -88,5 +90,6 @@ namespace OneCharter {
         private void dualTapToolStripMenuItem_Click(object sender, EventArgs e) {
             editView.AddElement(new RGData.GC.GCDualTapNote(0));
         }
+        #endregion
     }
 }
