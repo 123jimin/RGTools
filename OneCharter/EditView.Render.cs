@@ -58,8 +58,12 @@ namespace OneCharter {
                     }
                     // Draw the beatlines
                     float beatInterval = PixelPerQuad * 4.0f / measure.QuantBeat;
-                    for (int i = 1; i < measure.Size; i++) {
-                        DrawLineAt(PEN_BEAT, WIDTH_BEAT, measureStartY - beatInterval * i);
+                    for (int i = 1; i < measure.TotalBeats; i++) {
+                        if (i % measure.GroupBeats == 0) {
+                            DrawLineAt(PEN_MEASURE, WIDTH_MEASURE, measureStartY - beatInterval * i);
+                        } else {
+                            DrawLineAt(PEN_BEAT, WIDTH_BEAT, measureStartY - beatInterval * i);
+                        }
                     }
                     foreach (Element element in measure.Elements) {
                         GetSprite(element).DrawOn(g, 0, measureStartY - beatInterval * element.BeatTime);

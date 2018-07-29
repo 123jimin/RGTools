@@ -74,6 +74,7 @@
     <Compile Include="EditorForm.Designer.cs">
       <DependentUpon>EditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditView.Control.cs" />
     <Compile Include="EditView.Render.cs" />
     <Compile Include="EditView.cs" />
     <Compile Include="HotKey.cs" />
