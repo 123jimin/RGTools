@@ -10,5 +10,9 @@ namespace RGData.GC {
     /// </summary>
     public class GCDualTapNote : GCShortNote {
         public GCDualTapNote(int beatTime) : base(beatTime) {}
+        public override bool OccupiesSamePlace(Element other) {
+            if (!(other is Note)) return false;
+            return true;
+        }
     }
 }

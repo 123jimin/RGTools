@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using RGData;
 
-namespace OneCharter {
+namespace RGData
+{
     /// <summary>Represents a specific location in the chart.</summary>
-    public sealed class ChartTime {
+    public class ChartLocation {
         private double currentTime = 0.0d;
         /// <summary>Deviation from currentBeat.</summary>
         private double beatOffset = 0.0d;
@@ -47,9 +47,9 @@ namespace OneCharter {
             }
         }
 
-        public ChartTime(Chart chart) : this(chart, 0.0d) { }
+        public ChartLocation(Chart chart) : this(chart, 0.0d) { }
 
-        public ChartTime(Chart chart, double time) {
+        public ChartLocation(Chart chart, double time) {
             this.chart = chart;
             this.Time = time;
         }
@@ -60,9 +60,6 @@ namespace OneCharter {
 
         /// <summary>Move to the next beat. This should be fast.</summary>
         public void GoNextBeat() {
-            // TODO: jump to the next beat, based on the last measure
-            if (currentMeasureIndex == LAST_SECTION) return;
-
             beatOffset = 0.0d;
             if (currentMeasureIndex == OFFSET_SECTION) {
                 currentMeasureIndex = 0;
@@ -79,10 +76,7 @@ namespace OneCharter {
             if (beatOffset > 0.0d) {
                 beatOffset = 0.0d;
             } else {
-                if (currentMeasureIndex == LAST_SECTION) {
-                    currentMeasureIndex = currentSegment.Measures.Count;
-                    currentBeat = -1;
-                } else if (currentMeasureIndex == OFFSET_SECTION) {
+                if (currentMeasureIndex == OFFSET_SECTION) {
                     currentMeasureIndex = 0;
                     currentBeat = -1;
                 } else {
@@ -99,11 +93,19 @@ namespace OneCharter {
             beatOffset = 0.0d;
         }
 
+        /// <summary>Returns whether this location is in or after the last measure.</summary>
+        /// <returns>Whether this location is in or after the last measure.</returns>
+        public bool IsLastMeasure() {
+            return currentMeasureIndex == currentSegment.Measures.Count - 1 && currentSegmentIndex == chart.Segments.Count - 1;
+        }
+
         /// <summary>Processes overflowed currentBeat or currentMeasureIndex.
         /// Note: this method assumes that beatOffset is set to zero.</summary>
         private void HandleBeatOverflow() {
             if (currentMeasureIndex < 0) return;
             if (currentMeasure != null && currentBeat >= currentMeasure.TotalBeats) {
+                // Don't handle overflows in the last measure.
+                if (IsLastMeasure()) return;
                 // Next measure
                 currentBeat = 0;
                 currentMeasureIndex++;
@@ -113,10 +115,14 @@ namespace OneCharter {
                 currentSegmentIndex++;
                 if (currentSegmentIndex >= chart.Segments.Count) {
                     // There's no next segment
+                    throw new Exception("Last measure was encountered despite of the check before.");
+                    /*
                     currentSegmentIndex--;
-                    currentMeasureIndex = LAST_SECTION;
-                    currentMeasure = null;
-                    break;
+                    currentMeasureIndex = currentSegment.Measures.Count - 1;
+                    currentMeasure = currentSegment.Measures[currentMeasureIndex];
+                    currentBeat = currentMeasure.TotalBeats;
+                    */
+                    // break;
                 }
                 currentSegment = chart.Segments[currentSegmentIndex];
                 if (currentSegment.Offset > 0.0d) {
@@ -170,27 +176,28 @@ namespace OneCharter {
             }
         }
 
-        /// <summary>Returns whether currentSegment and currentMeasure must be recomputed.</summary>
-        /// <returns>Whether currentSegment or currentMeasure is outdated.</returns>
+        /// <summary>Returns whether beat-based locations must be recomputed.</summary>
+        /// <returns>Whether beat-based locations are outdated.</returns>
         private bool NeedsRecomputation() {
             if (chart == null) return false;
             if (currentSegment == null) return true;
             if (currentSegmentIndex >= chart.Segments.Count) return true;
             if (!ReferenceEquals(chart.Segments[currentSegmentIndex], currentSegment)) return true;
 
-            if (currentMeasureIndex == LAST_SECTION) {
-                if (chart.Segments.Count != currentSegmentIndex + 1) return true;
-            }
-
             if (currentMeasureIndex == OFFSET_SECTION) {
                 if (beatOffset >= currentSegment.Offset) return true;
             }
 
             if (currentMeasureIndex >= 0) {
+                // Invalid currentMeasure
                 if (currentMeasure == null) return true;
+                // Invalid currentMeasureIndex
                 if (currentMeasureIndex >= currentSegment.Measures.Count) return true;
                 if (!ReferenceEquals(currentSegment.Measures[currentMeasureIndex], currentMeasure)) return true;
-                if (beatOffset >= currentMeasure.TotalBeats) return true;
+                // Invalid currentBeat
+                if (!IsLastMeasure() && currentBeat >= currentMeasure.TotalBeats) return true;
+                // Invalid beatOffset
+                if (beatOffset >= currentSegment.MSPW / currentMeasure.QuantBeat) return true;
             }
             return false;
         }
@@ -201,7 +208,7 @@ namespace OneCharter {
                 currentSegment = null;
                 currentSegmentIndex = 0;
                 currentMeasure = null;
-                currentMeasureIndex = beatOffset > 0 ? LAST_SECTION : OFFSET_SECTION;
+                currentMeasureIndex = OFFSET_SECTION;
                 currentBeat = 0;
                 beatOffset = currentTime;
                 return;
@@ -224,7 +231,8 @@ namespace OneCharter {
                 double localChartTime = chartTime + segment.Offset;
                 foreach (Measure measure in segment.Measures) {
                     double len = segment.LengthOf(measure);
-                    if (currentTime < localChartTime + len) {
+                    bool isThisLast = segmentIndex == chart.Segments.Count - 1 && measureIndex == segment.Measures.Count - 1;
+                    if (isThisLast || currentTime < localChartTime + len) {
                         currentSegment = segment;
                         currentSegmentIndex = segmentIndex;
                         currentMeasure = measure;
@@ -248,10 +256,17 @@ namespace OneCharter {
             TimingSegment lastSegment = chart.Segments.Last();
             currentSegment = lastSegment;
             currentSegmentIndex = chart.Segments.Count - 1;
-            currentMeasure = null;
-            currentMeasureIndex = LAST_SECTION;
-            currentBeat = 0;
-            beatOffset = currentTime - chartTime;
+
+            if (lastSegment.Measures.Count == 0) {
+                // Put it in the offset section.
+                currentMeasure = null;
+                currentMeasureIndex = OFFSET_SECTION;
+                currentBeat = 0;
+                beatOffset = currentTime - (chartTime - lastSegment.Offset);
+                return;
+            }
+
+            throw new Exception("Last measure was encountered despite of the check before.");
         }
 
         /// <summary>Recomputes the currentTime from beat information.</summary>
@@ -270,9 +285,6 @@ namespace OneCharter {
             if (currentMeasureIndex == OFFSET_SECTION) {
                 currentTime += beatOffset; return;
             }
-            if (currentMeasureIndex == LAST_SECTION) {
-                currentTime += currentSegment.Length + beatOffset; return;
-            }
 
 
             if (!ReferenceEquals(currentMeasure, currentSegment.Measures[currentMeasureIndex])) {
@@ -286,6 +298,5 @@ namespace OneCharter {
         }
 
         private const int OFFSET_SECTION = -1;
-        private const int LAST_SECTION = -2;
     }
 }

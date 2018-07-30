@@ -15,10 +15,16 @@ namespace OneCharter {
         private BufferedGraphicsContext gContext;
         private BufferedGraphics bufferedGraphics;
         private object gLock = new object();
-        protected Control view;
+        protected Control viewPanel;
 
         // Chart
         protected ChartFile chartFile;
+
+        // View of the chart
+        protected ChartView chartView;
+
+        // Cursors
+        protected ChartLocation cursorLocation;
 
         // Timer for playback
         protected HexaTimer timer;
@@ -30,7 +36,8 @@ namespace OneCharter {
             get => chartFile;
             set {
                 chartFile = value;
-                currentLocation = new ChartTime(value.Chart);
+                chartView = new ChartView(value.Chart);
+                cursorLocation = chartView.CreateLocation();
             }
         }
         /// <summary>The chart which is currently viewed</summary>
@@ -39,9 +46,10 @@ namespace OneCharter {
         /// <summary>Display scale (pixel for a 4th note)</summary>
         public float PixelPerQuad = 80;
 
-        protected ChartTime currentLocation = new ChartTime(null);
+        // protected ChartTime currentLocation = new ChartTime(null);
         /// <summary>Current time (relative to the chart, not the audio)</summary>
-        public double CurrentTime { get => currentLocation.Time; } // TODO: make a setter
+        public double CurrentTime { get => cursorLocation.Time; } // TODO: make a setter
+        // public ChartTime CurrentLocation { get => currentLocation; }
 
         /// <summary>Desired FPS to draw</summary>
         public double FPS = 45;
@@ -56,7 +64,7 @@ namespace OneCharter {
         }}
 
         public EditView(Control view) {
-            this.view = view;
+            this.viewPanel = view;
             InitView();
 
             timer = new HexaTimer(1000d / FPS);
@@ -69,11 +77,11 @@ namespace OneCharter {
 
         private void InitView() {
             gContext = BufferedGraphicsManager.Current;
-            gContext.MaximumBuffer = new Size(view.Width + 1, view.Height + 1);
+            gContext.MaximumBuffer = new Size(viewPanel.Width + 1, viewPanel.Height + 1);
 
-            view.Paint += new PaintEventHandler(PaintView);
-            view.Resize += new EventHandler(OnResizeView);
-            bufferedGraphics = gContext.Allocate(view.CreateGraphics(), new Rectangle(0, 0, view.Width, view.Height));
+            viewPanel.Paint += new PaintEventHandler(PaintView);
+            viewPanel.Resize += new EventHandler(OnResizeView);
+            bufferedGraphics = gContext.Allocate(viewPanel.CreateGraphics(), new Rectangle(0, 0, viewPanel.Width, viewPanel.Height));
         }
 
         private void PaintView(object sender, PaintEventArgs e) {
@@ -83,10 +91,10 @@ namespace OneCharter {
         }
 
         private void OnResizeView(object sender, EventArgs e) {
-            gContext.MaximumBuffer = new Size(view.Width+1, view.Height+1);
+            gContext.MaximumBuffer = new Size(viewPanel.Width+1, viewPanel.Height+1);
             lock (gLock) {
                 bufferedGraphics?.Dispose();
-                bufferedGraphics = gContext.Allocate(view.CreateGraphics(), new Rectangle(0, 0, view.Width, view.Height));
+                bufferedGraphics = gContext.Allocate(viewPanel.CreateGraphics(), new Rectangle(0, 0, viewPanel.Width, viewPanel.Height));
             }
             Paint();
         }
@@ -99,10 +107,10 @@ namespace OneCharter {
 
             bool stopTimer = false;
             if (e.CurrentTime > maxTime) {
-                currentLocation.Time = 0;
+                cursorLocation.Time = 0;
                 stopTimer = true;
             } else {
-                currentLocation.Time = e.CurrentTime;
+                cursorLocation.Time = e.CurrentTime;
             }
             
             Paint();

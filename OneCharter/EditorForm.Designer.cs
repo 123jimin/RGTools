@@ -24,8 +24,6 @@
         /// </summary>
         private void InitializeComponent() {
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.timeStatLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,9 +46,13 @@
             this.scratchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.slideHoldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dualHoldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripDropDownButton4 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.deleteCurrentItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.playStopButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
             this.aboutOneCharterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.timeStatLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -60,6 +62,7 @@
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton2,
             this.toolStripDropDownButton1,
+            this.toolStripDropDownButton4,
             this.playStopButton,
             this.toolStripDropDownButton3});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
@@ -67,22 +70,6 @@
             this.toolStrip.Size = new System.Drawing.Size(327, 25);
             this.toolStrip.TabIndex = 0;
             this.toolStrip.Text = "toolStrip";
-            // 
-            // statusStrip
-            // 
-            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.timeStatLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 553);
-            this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Size = new System.Drawing.Size(327, 22);
-            this.statusStrip.TabIndex = 1;
-            this.statusStrip.Text = "statusStrip1";
-            // 
-            // timeStatLabel
-            // 
-            this.timeStatLabel.Name = "timeStatLabel";
-            this.timeStatLabel.Size = new System.Drawing.Size(66, 17);
-            this.timeStatLabel.Text = "(Time Stat)";
             // 
             // toolStripDropDownButton2
             // 
@@ -150,6 +137,7 @@
             this.measureToolStripMenuItem.Name = "measureToolStripMenuItem";
             this.measureToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.measureToolStripMenuItem.Text = "Measure";
+            this.measureToolStripMenuItem.Click += new System.EventHandler(this.measureToolStripMenuItem_Click);
             // 
             // timingSegmentToolStripMenuItem
             // 
@@ -247,6 +235,24 @@
             this.dualHoldToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.dualHoldToolStripMenuItem.Text = "Dual Hold";
             // 
+            // toolStripDropDownButton4
+            // 
+            this.toolStripDropDownButton4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteCurrentItemToolStripMenuItem});
+            this.toolStripDropDownButton4.Image = global::OneCharter.Properties.Resources.IconPencil;
+            this.toolStripDropDownButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton4.Name = "toolStripDropDownButton4";
+            this.toolStripDropDownButton4.Size = new System.Drawing.Size(56, 22);
+            this.toolStripDropDownButton4.Text = "&Edit";
+            // 
+            // deleteCurrentItemToolStripMenuItem
+            // 
+            this.deleteCurrentItemToolStripMenuItem.Image = global::OneCharter.Properties.Resources.IconEraser;
+            this.deleteCurrentItemToolStripMenuItem.Name = "deleteCurrentItemToolStripMenuItem";
+            this.deleteCurrentItemToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.deleteCurrentItemToolStripMenuItem.Text = "Delete current item";
+            this.deleteCurrentItemToolStripMenuItem.Click += new System.EventHandler(this.deleteCurrentItemToolStripMenuItem_Click);
+            // 
             // playStopButton
             // 
             this.playStopButton.Image = global::OneCharter.Properties.Resources.IconPlay;
@@ -273,6 +279,22 @@
             this.aboutOneCharterToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.aboutOneCharterToolStripMenuItem.Text = "About OneCharter";
             this.aboutOneCharterToolStripMenuItem.Click += new System.EventHandler(this.aboutOneCharterToolStripMenuItem_Click);
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.timeStatLabel});
+            this.statusStrip.Location = new System.Drawing.Point(0, 553);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(327, 22);
+            this.statusStrip.TabIndex = 1;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // timeStatLabel
+            // 
+            this.timeStatLabel.Name = "timeStatLabel";
+            this.timeStatLabel.Size = new System.Drawing.Size(66, 17);
+            this.timeStatLabel.Text = "(Time Stat)";
             // 
             // EditorForm
             // 
@@ -325,6 +347,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton3;
         private System.Windows.Forms.ToolStripMenuItem aboutOneCharterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton4;
+        private System.Windows.Forms.ToolStripMenuItem deleteCurrentItemToolStripMenuItem;
     }
 }
 

@@ -6,14 +6,24 @@ using System.Threading.Tasks;
 
 namespace RGData {
     public class Measure {
-        protected int quantBeat;
-        protected int groupBeats;
-        protected int totalBeats;
+        protected int quantBeat = 1;
+        protected int groupBeats = 1;
+        protected int totalBeats = 0;
 
         /// <summary>Unit beat size</summary>
         public int QuantBeat { get => quantBeat; set => Fine(value); }
         /// <summary>Total length of beats</summary>
-        public int TotalBeats { get => totalBeats; }
+        public int TotalBeats {
+            get => totalBeats;
+            set {
+                if (value <= totalBeats) throw new InvalidOperationException("TotalBeats can't be reduced.");
+                if (value % groupBeats > 0) {
+                    totalBeats = value - (value % groupBeats) + groupBeats;
+                } else {
+                    totalBeats = value;
+                }
+            }
+        }
         /// <summary>Number of beats per a measure</summary>
         public int GroupBeats { get => groupBeats; }
 
@@ -39,13 +49,9 @@ namespace RGData {
         public Measure(int quantBeat, int groupBeats, int totalBeats) {
             elements = new SortedList<int, ISet<Element>>();
 
-            if(totalBeats % groupBeats > 0) {
-                totalBeats -= totalBeats % groupBeats;
-                totalBeats += groupBeats;
-            }
             this.quantBeat = quantBeat;
             this.groupBeats = groupBeats;
-            this.totalBeats = totalBeats;
+            TotalBeats = totalBeats;
         }
 
         public void Fine(int adjustQuant) {
@@ -91,10 +97,21 @@ namespace RGData {
 
         public Measure Add(Element element) {
             if (elements.ContainsKey(element.BeatTime)) {
-                elements[element.BeatTime].Add(element);
+                ISet<Element> set = elements[element.BeatTime];
+                bool noCollide = true;
+                foreach (Element e in set) {
+                    if(Element.Collides(e, element)) {
+                        noCollide = false; break;
+                    }
+                }
+                if (noCollide) set.Add(element);
             } else {
                 ISet<Element> set = new HashSet<Element>();
                 set.Add(element);
+                if(element.BeatTime >= totalBeats) {
+                    // Do NOT auto-extend the measure here!
+                    throw new ArgumentOutOfRangeException($"Tried to put element at {element.BeatTime} in a measure with size {totalBeats}.");
+                }
                 elements.Add(element.BeatTime, set);
             }
             return this;
