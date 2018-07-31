@@ -9,6 +9,5 @@ namespace RGData {
     /// An abstract class representing non-long notes.
     /// </summary>
     public abstract class ShortNote: Note {
-        public ShortNote(int beatTime) : base(beatTime) { }
     }
 }

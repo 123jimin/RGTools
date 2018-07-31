@@ -1,15 +1,23 @@
 ﻿데이터 구조
 
 ChartFile: chart 및 기타 메타데이터
-	- Chart: 일반적인 채보 데이터 (TimingSegment 여러개를 보유하고 있음)
-		- List<TimingSegment>: 일정한 BPM의 노트들의 모임
-			- double BPM: beats per 4th notes
-			- uint offset: offset in ms from previous TimingSegment
-			- List<Measure>: 한 마디
-				- int quantBeat
-				- int groupBeats
-				- int totalBeats
-				- List<Element>: 안에 들어있는 것들
+	- Chart: 일반적인 채보 데이터 (Segment 여러개를 보유하고 있음)
+		- List<Segment>
+		- Set<Chart.Location>
+
+Chart.Location: chart 상의 한 지점
+
+Segment: Chart의 한 부분
+	- double Length: Segment의 길이 (in ms)
+	BlankSegment:
+		- double length
+	TimingSegment: 일정한 BPM의 노트들의 모임
+		- double BPM: beats per 4th notes
+		- List<Measure>: 한 마디
+			- int quantBeat
+			- int groupBeats
+			- int totalBeats
+			- List<Element>: 안에 들어있는 것들
 
 Element: 한 순간에 처리하는 것들
 	Note: 플레이어가 처리해야 되는 노트들의 모임

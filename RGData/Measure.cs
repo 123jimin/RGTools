@@ -4,103 +4,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RGData {
-    public class Measure {
-        protected int quantBeat = 1;
+namespace RGData
+{
+    public abstract class Measure {
         protected int groupBeats = 1;
         protected int totalBeats = 0;
 
-        /// <summary>Unit beat size</summary>
-        public int QuantBeat { get => quantBeat; set => Fine(value); }
-        /// <summary>Total length of beats</summary>
-        public int TotalBeats {
-            get => totalBeats;
-            set {
-                if (value <= totalBeats) throw new InvalidOperationException("TotalBeats can't be reduced.");
-                if (value % groupBeats > 0) {
-                    totalBeats = value - (value % groupBeats) + groupBeats;
-                } else {
-                    totalBeats = value;
-                }
-            }
-        }
-        /// <summary>Number of beats per a measure</summary>
-        public int GroupBeats { get => groupBeats; }
+        protected SortedList<int, ISet<Element>> elements = new SortedList<int, ISet<Element>>();
 
-        /// <summary>Number of 4th notes in this measure.</summary>
-        public double QuadLength { get => totalBeats * 4.0d / quantBeat; }
-        /// <summary>Number of whole(1st) notes in this measure.</summary>
-        public double WholeLength { get => (double) (totalBeats) / quantBeat; }
-
-
-        protected SortedList<int, ISet<Element>> elements;
-        // public IList<ISet<Element>> Elements { get => elements.Values; }
-        public IList<Element> Elements {
+        /// <summary>Gives pairs of (beat, element).</summary>
+        public IList<(int, Element)> Elements {
             get {
-                List<Element> v = new List<Element>();
-                foreach(ISet<Element> set in elements.Values) v.AddRange(set);
+                var v = new List<(int, Element)>();
+                foreach (var kv in elements) {
+                    foreach(Element element in kv.Value) {
+                        v.Add((kv.Key, element));
+                    }
+                }
                 return v;
             }
         }
         public IList<int> Beats { get => elements.Keys; }
 
-        public Measure(int quantBeat = 4): this(quantBeat, quantBeat) {}
-        public Measure(int quantBeat, int groupBeats): this(quantBeat, groupBeats, groupBeats) {}
-        public Measure(int quantBeat, int groupBeats, int totalBeats) {
-            elements = new SortedList<int, ISet<Element>>();
+        /// <summary>Total number of beats in this measure chunk.</summary>
+        public int TotalBeats { get => totalBeats; }
 
-            this.quantBeat = quantBeat;
-            this.groupBeats = groupBeats;
-            TotalBeats = totalBeats;
-        }
+        /// <summary>Number of beats per a measure</summary>
+        public int GroupBeats { get => groupBeats; }
 
-        public void Fine(int adjustQuant) {
-            if (adjustQuant == quantBeat) return;
-            int multiplier = adjustQuant / Util.GCD(quantBeat, adjustQuant);
-            SortedList<int, ISet<Element>> newList = new SortedList<int, ISet<Element>>();
-            foreach (var pair in elements) {
-                ISet<Element> set = pair.Value;
-                foreach(Element element in set) {
-                    element.BeatTime *= multiplier;
-                }
-                newList.Add(pair.Key * multiplier, set);
+        /// <summary>Adds new measures to this measure group.</summary>
+        /// <param name="totalBeats">Desired amount of total beats</param>
+        internal void Extend(int totalBeats) {
+            if (totalBeats <= this.totalBeats) throw new InvalidOperationException("TotalBeats can't be reduced.");
+            if (totalBeats % groupBeats > 0) {
+                this.totalBeats = totalBeats - (totalBeats % groupBeats) + groupBeats;
+            } else {
+                this.totalBeats = totalBeats;
             }
-            elements = newList;
-            quantBeat *= multiplier;
-            groupBeats *= multiplier;
-            totalBeats *= multiplier;
         }
-
-        public void Coarsen() {
-            int divider = Util.GCD(quantBeat, groupBeats);
-            divider = Util.GCD(divider, totalBeats);
-            if (divider == 1) return;
-            foreach (int time in elements.Keys) {
-                divider = Util.GCD(divider, time);
-                if (divider == 1) return;
-            }
-
-            quantBeat /= divider;
-            groupBeats /= divider;
-            totalBeats /= divider;
-
-            SortedList<int, ISet<Element>> newList = new SortedList<int, ISet<Element>>();
-            foreach (var pair in elements) {
-                ISet<Element> set = pair.Value;
-                foreach(Element element in set) {
-                    element.BeatTime /= divider;
-                }
-                newList.Add(pair.Key / divider, set);
-            }
-            elements = newList;
-        }
-
-        public Measure Add(Element element) {
-            if (elements.ContainsKey(element.BeatTime)) {
-                ISet<Element> set = elements[element.BeatTime];
+        
+        public void Add(Element element, int beat) {
+            if (elements.ContainsKey(beat)) {
+                ISet<Element> set = elements[beat];
                 bool noCollide = true;
                 foreach (Element e in set) {
-                    if(Element.Collides(e, element)) {
+                    if (Element.Collides(e, element)) {
                         noCollide = false; break;
                     }
                 }
@@ -108,21 +56,16 @@ namespace RGData {
             } else {
                 ISet<Element> set = new HashSet<Element>();
                 set.Add(element);
-                if(element.BeatTime >= totalBeats) {
+                if (beat >= totalBeats) {
                     // Do NOT auto-extend the measure here!
-                    throw new ArgumentOutOfRangeException($"Tried to put element at {element.BeatTime} in a measure with size {totalBeats}.");
+                    throw new ArgumentOutOfRangeException($"Tried to put element at {beat} in a measure with size {totalBeats}.");
                 }
-                elements.Add(element.BeatTime, set);
+                elements.Add(beat, set);
             }
-            return this;
         }
 
         public void RemoveAt(int beat) {
             elements.Remove(beat);
-        }
-
-        public void Simplify() {
-            Coarsen();
         }
     }
 }

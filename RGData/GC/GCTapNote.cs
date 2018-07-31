@@ -9,7 +9,7 @@ namespace RGData.GC {
     /// A normal note for GrooveCoaster
     /// </summary>
     public class GCTapNote : GCShortNote {
-        public GCTapNote(int beatTime) : base(beatTime) {}
+        public GCTapNote() {}
         public override bool OccupiesSamePlace(Element other) {
             if (!(other is Note)) return false;
             return true;

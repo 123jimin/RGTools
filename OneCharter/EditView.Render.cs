@@ -45,16 +45,15 @@ namespace OneCharter {
             };
             Action<Pen, int> DrawLine = (Pen pen, int width) => DrawLineAt(pen, width, measureStartY);
 
-            foreach (TimingSegment segment in chartFile.Chart.Segments) {
+            foreach (Segment segment in chartFile.Chart.Segments) {
                 DrawLine(PEN_SEGMENT, WIDTH_SEGMENT);
 
-                bool drawFirstMeasure = segment.Offset > 0;
-                measureStartY -= (float) (segment.Offset * PixelPerQuad / segment.MSPQ);
-                foreach (Measure measure in segment.Measures) {
+                bool isFirstMeasure = true;
+                foreach (BeatMeasure measure in segment.Measures) {
                     // Draw the beginnng point of the measure
-                    if (drawFirstMeasure) {
+                    if (isFirstMeasure) {
                         DrawLine(PEN_MEASURE, WIDTH_MEASURE);
-                        drawFirstMeasure = false;
+                        isFirstMeasure = false;
                     }
                     // Draw the beatlines
                     float beatInterval = PixelPerQuad * 4.0f / measure.QuantBeat;
@@ -65,8 +64,8 @@ namespace OneCharter {
                             DrawLineAt(PEN_BEAT, WIDTH_BEAT, measureStartY - beatInterval * i);
                         }
                     }
-                    foreach (Element element in measure.Elements) {
-                        GetSprite(element).DrawOn(g, 0, measureStartY - beatInterval * element.BeatTime);
+                    foreach (var elementTuple in measure.Elements) {
+                        GetSprite(elementTuple.Item2).DrawOn(g, 0, measureStartY - beatInterval * elementTuple.Item1);
                     }
                     measureStartY -= PixelPerQuad * (float) measure.QuadLength;
                     DrawLine(PEN_MEASURE, WIDTH_MEASURE);

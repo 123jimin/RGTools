@@ -22,36 +22,26 @@ namespace RGData {
             chart = new Chart();
             MetaData = new Dictionary<string, string>();
         }
-
-        public void Simplify() {
-            // Simplify every components of chart
-            chart.Simplify();
-
-            // The first segment's offset should be zero.
-            if(chart.Segments.Count > 0) {
-                TimingSegment firstSegment = chart.Segments.First();
-                if(firstSegment.Offset > 0) {
-                    Offset += (int) firstSegment.Offset;
-                    firstSegment.Offset = 0;
-                }
-            }
-        }
         
         public static ChartFile GetTestChartFile() {
             ChartFile f = new ChartFile();
-            TimingSegment segment = new TimingSegment();
+            Segment segment = new Segment();
             segment.BPM = 120;
 
-            Measure measure = new Measure(4);
-            measure.Add(new GC.GCDualTapNote(0));
-            measure.Add(new GC.GCTapNote(1)).Add(new GC.GCTapNote(2)).Add(new GC.GCTapNote(3));
+            BeatMeasure measure = new BeatMeasure(4);
+            measure.Add(new GC.GCDualTapNote(), 0);
+            measure.Add(new GC.GCTapNote(), 1);
+            measure.Add(new GC.GCTapNote(), 2);
+            measure.Add(new GC.GCTapNote(), 3);
 
             segment.Add(measure);
 
-            measure = new Measure(8);
-            measure.Add(new GC.GCDualTapNote(0));
-            measure.Add(new GC.GCTapNote(1)).Add(new GC.GCTapNote(2)).Add(new GC.GCTapNote(3));
-            measure.Add(new GC.GCDualTapNote(4));
+            measure = new BeatMeasure(8);
+            measure.Add(new GC.GCDualTapNote(), 0);
+            measure.Add(new GC.GCTapNote(), 1);
+            measure.Add(new GC.GCTapNote(), 2);
+            measure.Add(new GC.GCTapNote(), 3);
+            measure.Add(new GC.GCDualTapNote(), 4);
 
             segment.Add(measure);
 

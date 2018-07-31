@@ -20,11 +20,8 @@ namespace OneCharter {
         // Chart
         protected ChartFile chartFile;
 
-        // View of the chart
-        protected ChartView chartView;
-
         // Cursors
-        protected ChartLocation cursorLocation;
+        protected Chart.Location cursorLocation;
 
         // Timer for playback
         protected HexaTimer timer;
@@ -36,8 +33,7 @@ namespace OneCharter {
             get => chartFile;
             set {
                 chartFile = value;
-                chartView = new ChartView(value.Chart);
-                cursorLocation = chartView.CreateLocation();
+                cursorLocation = Chart.CreateLocation();
             }
         }
         /// <summary>The chart which is currently viewed</summary>
@@ -60,11 +56,11 @@ namespace OneCharter {
 
         /// <summary>The y coordinate of the start of the chart, relative to the cursor.</summary>
         public float CurrentScrollY { get {
-                return PixelPerQuad * (float) chartFile.Chart.GetQuadCount(CurrentTime);
+                return PixelPerQuad * (float) cursorLocation.TimeInQuad;
         }}
 
         public EditView(Control view) {
-            this.viewPanel = view;
+            viewPanel = view;
             InitView();
 
             timer = new HexaTimer(1000d / FPS);

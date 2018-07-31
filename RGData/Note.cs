@@ -9,6 +9,5 @@ namespace RGData {
     /// An abstract class representing every kinds of notes.
     /// </summary>
     public abstract class Note: Element {
-        public Note(int beatTime) : base(beatTime) { }
     }
 }

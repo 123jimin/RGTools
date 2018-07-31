@@ -12,15 +12,7 @@ namespace OneCharter {
         /// <param name="element">The element to be added. Its BeatTime will be modified.</param>
         public void AddElement(Element element) {
             Snap();
-            element.BeatTime = cursorLocation.Beat;
-            if (cursorLocation.IsLastMeasure()) {
-                // Extends the last measure.
-                Measure measure = cursorLocation.Measure;
-                if(element.BeatTime >= measure.TotalBeats) {
-                    measure.TotalBeats = element.BeatTime + 1;
-                }
-            }
-            cursorLocation.Measure.Add(element);
+            Chart.AddElement(element, cursorLocation);
             Paint();
         }
 
@@ -49,12 +41,12 @@ namespace OneCharter {
         }
 
         /// <summary>Move the cursor (+t)</summary>
-        public void MoveFuture() {
+        public void NextBeat() {
             Pause(); cursorLocation.GoNextBeat(); Paint();
         }
 
         /// <summary>Move the cursor (-t)</summary>
-        public void MovePast() {
+        public void PrevBeat() {
             Pause(); cursorLocation.GoPrevBeat(); Paint();
         }
 

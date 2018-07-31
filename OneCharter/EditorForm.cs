@@ -16,8 +16,8 @@ namespace OneCharter {
 
         private static readonly Func<Element>[] GCShortkeyElements = {
             () => null,
-            () => new RGData.GC.GCTapNote(0),
-            () => new RGData.GC.GCDualTapNote(0)
+            () => new RGData.GC.GCTapNote(),
+            () => new RGData.GC.GCDualTapNote()
         };
 
         public EditorForm() {
@@ -44,7 +44,7 @@ namespace OneCharter {
             }
         }
 
-        private Measure GetANewMeasure() {
+        private BeatMeasure GetANewMeasure() {
             measureEditForm.ShowDialog(this);
             throw new NotImplementedException();
         }
@@ -83,7 +83,7 @@ namespace OneCharter {
                 if(index < GCShortkeyElements.Length) {
                     Element element = GCShortkeyElements[index]();
                     if (element != null) editView.AddElement(element);
-                    editView.MoveFuture();
+                    editView.NextBeat();
                     return;
                 }
             }
@@ -96,13 +96,13 @@ namespace OneCharter {
                     break;
                 case HotKey.DeleteAndGoBack:
                     editView.RemoveElementsAtCursor();
-                    editView.MovePast();
+                    editView.PrevBeat();
                     break;
                 case Keys.Down:
-                    editView.MovePast();
+                    editView.PrevBeat();
                     break;
                 case Keys.Up:
-                    editView.MoveFuture();
+                    editView.NextBeat();
                     break;
             }
         }
@@ -121,11 +121,11 @@ namespace OneCharter {
         }
 
         private void tapToolStripMenuItem_Click(object sender, EventArgs e) {
-            editView.AddElement(new RGData.GC.GCTapNote(0));
+            editView.AddElement(new RGData.GC.GCTapNote());
         }
 
         private void dualTapToolStripMenuItem_Click(object sender, EventArgs e) {
-            editView.AddElement(new RGData.GC.GCDualTapNote(0));
+            editView.AddElement(new RGData.GC.GCDualTapNote());
         }
 
         private void measureToolStripMenuItem_Click(object sender, EventArgs e) {

@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RGData.GC {
-    public abstract class GCShortNote: ShortNote {
+    public abstract class GCShortNote : ShortNote {
         // TODO: put stuffs related to note display
-        public GCShortNote(int beatTime) : base(beatTime) {}
     }
 }

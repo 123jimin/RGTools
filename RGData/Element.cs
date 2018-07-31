@@ -10,15 +10,6 @@ namespace RGData {
     /// An abstract class representing things on a chart.
     /// </summary>
     public abstract class Element {
-        protected int beatTime;
-
-        /// <summary>Timing of this element (in relative to the measure this element is in)</summary>
-        public int BeatTime { get => beatTime; set => beatTime = value; }
-
-        public Element(int beatTime) {
-            this.beatTime = beatTime;
-        }
-
         /// <summary>Returns whether given two elements cannot occur at the same time.</summary>
         /// <param name="other">The other element.</param>
         /// <returns>Whether this element and the other element occupies same space.</returns>
