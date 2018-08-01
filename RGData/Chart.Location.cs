@@ -102,6 +102,7 @@ namespace RGData {
 
             #endregion Constructors
 
+            #region Public queries
             public override string ToString() {
                 return $"[Location s{segmentIndex}:m{measureIndex}:b{beat} + {beatOffset}]";
             }
@@ -123,6 +124,8 @@ namespace RGData {
                 return $"Segment {segmentIndex+1}, Measure {measureIndex+1}, {beatString}";
             }
 
+            /// <summary>Returns whether this location is in the very first measure.</summary>
+            /// <returns>Whether this location is in the very first measure.</returns>
             public bool IsFirstMeasure() {
                 return segmentIndex == 0 && measureIndex == 0;
             }
@@ -132,6 +135,27 @@ namespace RGData {
             public bool IsLastMeasure() {
                 return segmentIndex == chart.Segments.Count - 1 && measureIndex == segment.Measures.Count - 1;
             }
+
+            /// <summary>Returns whether this location is at a beginning of a measure.</summary>
+            /// <returns>Whether this location is at a beginning of a measure.</returns>
+            public bool IsAtBeginningOfAMeasure() {
+                return beat == 0 && beatOffset == 0.0d;
+            }
+
+            /// <summary>Returns the previous measure of the measure this location is in.</summary>
+            /// <returns>The last measure before the measure with this location,
+            /// or the first measure if such measure does not exist.</returns>
+            public Measure LastMeasureBeforeThis() {
+                if (IsFirstMeasure() || measureIndex > 0) return measure;
+                var prevSegMeasures = chart.segments[segmentIndex - 1].Measures;
+                if(prevSegMeasures.Count == 0) {
+                    // Look up previous segments.
+                    // This should not occur in normal conditions.
+                    throw new NotImplementedException();
+                }
+                return prevSegMeasures[prevSegMeasures.Count - 1];
+            }
+            #endregion
 
             #region Public operations
 
@@ -206,16 +230,10 @@ namespace RGData {
                 for (int i = 0; i < segmentIndex; i++) {
                     time += chart.Segments[i].Length;
                 }
-
-                switch (segment) {
-                    case Segment tSeg:
-                        for (int i = 0; i < measureIndex; i++) {
-                            time += tSeg.LengthOf(i);
-                        }
-                        time += beat * tSeg.BeatLengthOf(measureIndex);
-                        break;
+                for (int i = 0; i < measureIndex; i++) {
+                    time += segment.LengthOf(i);
                 }
-
+                time += beat * segment.BeatLengthOf(measureIndex);
                 time += beatOffset;
             }
 

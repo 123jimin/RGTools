@@ -43,6 +43,10 @@ namespace RGData
             }
         }
         
+        public void Add(int beat, Element element) {
+            Add(element, beat);
+        }
+
         public void Add(Element element, int beat) {
             if (elements.ContainsKey(beat)) {
                 ISet<Element> set = elements[beat];

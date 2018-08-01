@@ -57,9 +57,8 @@ namespace RGData {
             this.qpm = qpm;
         }
 
-        public Segment Add(Measure measure) {
+        internal void Add(Measure measure) {
             measures.Add(measure);
-            return this;
         }
 
         /// <summary>Computes the length of a measure object in ms.</summary>
