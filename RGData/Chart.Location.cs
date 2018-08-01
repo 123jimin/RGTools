@@ -106,6 +106,23 @@ namespace RGData {
                 return $"[Location s{segmentIndex}:m{measureIndex}:b{beat} + {beatOffset}]";
             }
 
+            /// <summary>Returns a representation string, readable by a human.</summary>
+            /// <returns>A readable representation of this location.</returns>
+            public string ToRepr() {
+                string beatString;
+                switch (measure) {
+                    case BeatMeasure bMeasure:
+                        beatString = $"({beat} of {bMeasure.TotalBeats}) / {bMeasure.QuantBeat}";
+                        break;
+                    case OffsetMeasure oMeasure:
+                        beatString = $"{oMeasure.UnitLength}ms x {beat} of {oMeasure.TotalBeats}";
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+                return $"Segment {segmentIndex+1}, Measure {measureIndex+1}, {beatString}";
+            }
+
             public bool IsFirstMeasure() {
                 return segmentIndex == 0 && measureIndex == 0;
             }
@@ -144,6 +161,44 @@ namespace RGData {
             }
 
             #endregion Public operations
+
+            #region Comparisons
+            public static bool operator ==(Location l1, Location l2) {
+                l1.NormalizeIndices(); l2.NormalizeIndices();
+                if (l1.segmentIndex != l2.segmentIndex || l1.measureIndex != l2.measureIndex) return false;
+                if (l1.beat != l2.beat || l1.beatOffset != l2.beatOffset) return false;
+                return true;
+            }
+            public static bool operator !=(Location l1, Location l2) {
+                return !(l1 == l2);
+            }
+            public static bool operator >(Location l1, Location l2) {
+                l1.NormalizeIndices(); l2.NormalizeIndices();
+                if (l1.segmentIndex < l2.segmentIndex) return false;
+                if (l1.segmentIndex > l2.segmentIndex) return true;
+                if (l1.measureIndex < l2.measureIndex) return false;
+                if (l1.measureIndex > l2.measureIndex) return true;
+                if (l1.beat < l2.beat) return false;
+                if (l1.beat > l2.beat) return true;
+                return l1.beatOffset > l2.beatOffset;
+            }
+            public static bool operator >=(Location l1, Location l2) {
+                l1.NormalizeIndices(); l2.NormalizeIndices();
+                if (l1.segmentIndex < l2.segmentIndex) return false;
+                if (l1.segmentIndex > l2.segmentIndex) return true;
+                if (l1.measureIndex < l2.measureIndex) return false;
+                if (l1.measureIndex > l2.measureIndex) return true;
+                if (l1.beat < l2.beat) return false;
+                if (l1.beat > l2.beat) return true;
+                return l1.beatOffset >= l2.beatOffset;
+            }
+            public static bool operator <(Location l1, Location l2) {
+                return l2 > l1;
+            }
+            public static bool operator <=(Location l1, Location l2) {
+                return l2 >= l1;
+            }
+            #endregion
 
             /// <summary>Recomputes Time based on current location (segment / measure).</summary>
             internal void RecomputeTime() {
@@ -294,7 +349,14 @@ namespace RGData {
                 return measureIndex < 0;
             }
 
-            /// <summary>Handles beatOffset, beat, measureIndex, and segmentIndex overflows.</summary>
+            /// <summary>Normalize beatOffset, beat, and segmentIndex.</summary>
+            internal void NormalizeIndices() {
+                if (HasUnderflow()) HandleUnderflow();
+                if (HasOverflow()) HandleOverflow();
+                // measure and segment are applied through above methods.
+            }
+
+            /// <summary>Handles beatOffset, beat, and measureIndex overflows.</summary>
             internal void HandleOverflow() {
                 // HasOverflow automatically applies segmentIndex and measureIndex.
                 while (HasOverflow()) {
