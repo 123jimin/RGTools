@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace RGData {
+    /// <summary>A class representing a chart data, without any metadata.
+    /// Chart.Locations (obtained by CreateLocation) can be used to manipulate the chart.</summary>
     public partial class Chart {
         protected IList<Segment> segments;
         public IList<Segment> Segments { get => segments; }
@@ -103,6 +105,43 @@ namespace RGData {
         /// <param name="measure">The measure which will be made finer.</param>
         /// <param name="fineQuantBeat">The desired quantBeat for the measure.</param>
         public void FineMeasure(Measure measure, int fineQuantBeat) {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>Insert a given measure at the given location.</summary>
+        /// <param name="location">The location which the measure will be added.</param>
+        /// <param name="measure">The measure to be added.</param>
+        public void InsertMeasureAt(Location location, Measure measure) {
+            if (location.IsLastMeasure() && location.beat >= location.Measure.TotalBeats) {
+                // Append a measure to the end of the chart.
+                throw new NotImplementedException();
+            }
+            // TODO: do not split if measure can be 'blended in'.
+            SplitMeasureAt(location);
+            // Indices for the new measure.
+            Segment targetSegment = location.Segment;
+            int targetSegmentIndex = location.segmentIndex;
+            int targetMeasureIndex = location.measureIndex;
+            if (location.measureIndex == 0 && targetSegmentIndex > 0) {
+                targetSegment = segments[--targetSegmentIndex];
+                targetMeasureIndex = targetSegment.Measures.Count;
+            }
+            targetSegment.Measures.Insert(targetMeasureIndex, measure);
+
+            foreach(Location loc in locations) {
+                if(loc.segmentIndex == targetSegmentIndex && loc.measureIndex >= targetMeasureIndex) {
+                    loc.measureIndex++;
+                }
+                loc.NormalizeIndices();
+                loc.RecomputeTime();
+            }
+        }
+
+        /// <summary>Split a measure into two or many measures, cut at the given measure.</summary>
+        /// <param name="location">The location which will be used to cut a measure.</param>
+        public void SplitMeasureAt(Location location) {
+            // No need to split.
+            if (location.IsAtBeginningOfAMeasure()) return;
             throw new NotImplementedException();
         }
 
