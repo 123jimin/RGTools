@@ -187,6 +187,22 @@ namespace RGData {
             #endregion Public operations
 
             #region Comparisons
+            public override bool Equals(object obj) {
+                Location that = obj as Location;
+                if (that == null) return false;
+                return this == that;
+            }
+            public override int GetHashCode() {
+                NormalizeIndices();
+
+                int hash = 0x10CA7109;
+                hash ^= segmentIndex * 0x1001;
+                hash ^= measureIndex * 0xFFF;
+                hash ^= beat * 0x81;
+                hash ^= beatOffset.GetHashCode();
+
+                return hash;
+            }
             public static bool operator ==(Location l1, Location l2) {
                 l1.NormalizeIndices(); l2.NormalizeIndices();
                 if (l1.segmentIndex != l2.segmentIndex || l1.measureIndex != l2.measureIndex) return false;
