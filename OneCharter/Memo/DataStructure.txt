@@ -8,16 +8,24 @@ ChartFile: chart 및 기타 메타데이터
 Chart.Location: chart 상의 한 지점
 
 Segment: Chart의 한 부분
-	- double Length: Segment의 길이 (in ms)
-	BlankSegment:
-		- double length
-	TimingSegment: 일정한 BPM의 노트들의 모임
-		- double BPM: beats per 4th notes
-		- List<Measure>: 한 마디
-			- int quantBeat
-			- int groupBeats
-			- int totalBeats
-			- List<Element>: 안에 들어있는 것들
+	- double Length: segment의 길이 (in ms)
+	- double WholeCount: segment의 길이 (in whole notes)
+	- double QPM: segment의 분당 4분음표
+	- double MSPW: segment의 한 whole note당 ms
+	- IList<Measure> measures: 마디들
+
+Measure: 동일한 속성의 여러 마디
+	* Chart의 마지막 마디의 경우 그 마디가 무한 반복한다고 가정한다!
+	- SortedList<int, ISet<Element>> elements: 안에 들어있는 것들
+		(index에 element들이 있음; multi-dictionary?)
+	- int GroupBeats: 한 마디에 있는 비트
+	- int TotalBeats: 마디 전체 비트 (TotalBeats가 GroupBeats의 배수일 필요는 없음!)
+	OffsetMeasure: 특정 ms 길이의 마디들 (GroupBeats는 항상 1)
+		- double UnitLength: 한 마디의 길이(ms)
+		- double TotalLength: 전체 마디의 길이(ms) = UnitLength * TotalBeats
+	BeatMeasure: 특정 박 길이의 마디들
+		- int QuantBeat: '비트'가 몇분박인지
+		- double WholeLength: 전체 마디들의 길이를 whole note 단위로
 
 Element: 한 순간에 처리하는 것들
 	Note: 플레이어가 처리해야 되는 노트들의 모임
