@@ -57,7 +57,7 @@ namespace RGData {
             this.qpm = qpm;
         }
 
-        internal void Add(Measure measure) {
+        internal void Append(Measure measure) {
             measures.Add(measure);
         }
 

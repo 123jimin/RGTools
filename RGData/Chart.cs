@@ -35,7 +35,7 @@ namespace RGData {
 
         /// <summary>Adds a new segment to the end of this chart.</summary>
         /// <param name="segment">The segment to be added.</param>
-        public void Add(Segment segment) {
+        public void Append(Segment segment) {
             segments.Add(segment);
 
             // Move the location into this segment if necessary.
@@ -48,12 +48,12 @@ namespace RGData {
 
         /// <summary>Adds a new measure to the end of this chart.</summary>
         /// <param name="measure">The measure to be added.</param>
-        public void Add(Measure measure) {
+        public void Append(Measure measure) {
             if (segments.Count == 0) {
                 throw new InvalidOperationException("Tried to add a new measure to a chart without any segment!");
             }
 
-            segments.Last().Add(measure);
+            segments.Last().Append(measure);
 
             // Move the location into this measure if necessary.
             foreach (Location location in locations) {
@@ -66,7 +66,7 @@ namespace RGData {
         /// <summary>Add an element at specific location on this chart.</summary>
         /// <param name="element">The element to be added.</param>
         /// <param name="location">The location which the element will be added (beatOffset will be ignored!).</param>
-        public void AddElement(Element element, Location location) {
+        public void InsertAt(Location location, Element element) {
             if (location.IsLastMeasure() && (location.Segment is Segment tSeg)) {
                 // Extends the last measure.
                 Measure measure = location.Measure;
@@ -108,15 +108,18 @@ namespace RGData {
             throw new NotImplementedException();
         }
 
-        /// <summary>Insert a given measure at the given location.</summary>
+        /// <summary>
+        /// Insert a given measure at the given location.
+        /// Currently contents in the measure will NOT be added.
+        /// </summary>
         /// <param name="location">The location which the measure will be added.</param>
         /// <param name="measure">The measure to be added.</param>
-        public void InsertMeasureAt(Location location, Measure measure) {
+        public void InsertAt(Location location, Measure measure) {
             if (location.IsLastMeasure() && location.beat >= location.Measure.TotalBeats) {
                 // Append a measure to the end of the chart.
                 throw new NotImplementedException();
             }
-            // TODO: do not split if measure can be 'blended in'.
+            // TODO: do not split if the current measure can be extended to accommondate new measure.
             SplitMeasureAt(location);
             // Indices for the new measure.
             Segment targetSegment = location.Segment;

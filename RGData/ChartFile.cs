@@ -34,7 +34,7 @@ namespace RGData {
             measure.Add(new GC.GCTapNote(), 2);
             measure.Add(new GC.GCTapNote(), 3);
 
-            segment.Add(measure);
+            segment.Append(measure);
 
             measure = new BeatMeasure(8);
             measure.Add(new GC.GCDualTapNote(), 0);
@@ -43,9 +43,9 @@ namespace RGData {
             measure.Add(new GC.GCTapNote(), 3);
             measure.Add(new GC.GCDualTapNote(), 4);
 
-            segment.Add(measure);
+            segment.Append(measure);
 
-            f.Chart.Add(segment);
+            f.Chart.Append(segment);
             return f;
         }
     }
