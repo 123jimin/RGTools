@@ -14,6 +14,7 @@ namespace OneCharter {
         private EditView editView;
         private MeasureEditForm measureEditForm;
 
+        /// <summary>Map from int (numpad key) to GC elements (to insert)</summary>
         private static readonly Func<Element>[] GCShortkeyElements = {
             () => null,
             () => new RGData.GC.GCTapNote(),
@@ -35,7 +36,7 @@ namespace OneCharter {
             editView.StopPlaying += EditView_StopPlaying;
         }
 
-
+        /// <summary>Toggles play/stop of the editor.</summary>
         public void TogglePlay() {
             if (editView.IsPlaying) {
                 editView.Pause();
@@ -44,13 +45,21 @@ namespace OneCharter {
             }
         }
 
-        private BeatMeasure GetANewMeasure() {
-            measureEditForm.ShowDialog(this);
-            throw new NotImplementedException();
+        /// <summary>Shows the measure creation dialogue, then returns the measure.</summary>
+        /// <returns>A new measure, or null if the user decided not to create a new measure.</returns>
+        private Measure GetANewMeasure() {
+            // Sets the measureEditForm to create mode.
+            measureEditForm.Measure = null;
+            // Shows the dialog
+            DialogResult result = measureEditForm.ShowDialog(this);
+            return measureEditForm.Measure;
         }
 
         public void TryCreateMeasure() {
-            // If the cursor is at the boundary, create a new measure.
+            Measure measure = GetANewMeasure();
+            if (measure == null) return;
+
+            editView.InsertMeasure(measure);
         }
 
         #region Events

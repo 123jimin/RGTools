@@ -19,9 +19,18 @@ namespace OneCharter {
             }
         }
 
+        /// <summary>Draws the current chart to the graphics buffer.</summary>
+        public void Paint() {
+            lock (gLock) {
+                Graphics graphics = bufferedGraphics.Graphics;
+                DrawChartOn(graphics);
+            }
+            viewPanel.Invalidate();
+        }
+
         /// <summary>Draw the chart on a graphics.</summary>
         /// <param name="g">The graphics which the chart will be drawn on.</param>
-        protected void Draw(Graphics g) {
+        protected void DrawChartOn(Graphics g) {
             float centerX = viewPanel.Width / 2;
             float centerY = viewPanel.Height - PixelPerQuad * LOOKBEHIND_AMOUNT;
             g.Clear(Color.White);

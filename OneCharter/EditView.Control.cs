@@ -6,20 +6,43 @@ using System.Text;
 using System.Threading.Tasks;
 using RGData;
 
+/**
+ * EditView.Control.cs - Parts of EditView class related to editor behaviors.
+ * In the future, all of these operations will be done with EditAction classes (to support undo/redo).
+ **/
+
 namespace OneCharter {
     public partial class EditView {
+        #region Undoable actions
         /// <summary>Adds an element to current cursor location.</summary>
         /// <param name="element">The element to be added. Its BeatTime will be modified.</param>
         public void AddElement(Element element) {
             Snap();
-            Chart.AddElement(element, cursorLocation);
+            Chart.InsertAt(cursorLocation, element);
+            Paint();
+        }
+        
+        public void InsertMeasure(Measure measure) {
+            Snap();
+            Chart.InsertAt(cursorLocation, measure);
             Paint();
         }
 
-        /// <summary>Snaps the cursor to nearest beat</summary>
-        protected void Snap() {
-            cursorLocation.RemoveBeatOffset();
+        /// <summary>Move the cursor (+t)</summary>
+        public void NextBeat() {
+            Pause(); cursorLocation.GoNextBeat(); Paint();
         }
+
+        /// <summary>Move the cursor (-t)</summary>
+        public void PrevBeat() {
+            Pause(); cursorLocation.GoPrevBeat(); Paint();
+        }
+
+        /// <summary>Removes all elemented located at current cursor.</summary>
+        public void RemoveElementsAtCursor() {
+            Snap(); cursorLocation.Measure.RemoveAt(cursorLocation.Beat); Paint();
+        }
+        #endregion
 
         /// <summary>Starts playing</summary>
         public void Play() {
@@ -40,28 +63,9 @@ namespace OneCharter {
             StopPlaying?.Invoke(this, new EventArgs());
         }
 
-        /// <summary>Move the cursor (+t)</summary>
-        public void NextBeat() {
-            Pause(); cursorLocation.GoNextBeat(); Paint();
-        }
-
-        /// <summary>Move the cursor (-t)</summary>
-        public void PrevBeat() {
-            Pause(); cursorLocation.GoPrevBeat(); Paint();
-        }
-
-        /// <summary>Removes all elemented located at current cursor.</summary>
-        public void RemoveElementsAtCursor() {
-            Snap(); cursorLocation.Measure.RemoveAt(cursorLocation.Beat); Paint();
-        }
-
-        /// <summary>Draws the current chart to the graphics buffer.</summary>
-        public void Paint() {
-            lock (gLock) {
-                Graphics graphics = bufferedGraphics.Graphics;
-                Draw(graphics);
-            }
-            viewPanel.Invalidate();
+        /// <summary>Snaps the cursor to nearest beat</summary>
+        protected void Snap() {
+            cursorLocation.RemoveBeatOffset();
         }
     }
 }
