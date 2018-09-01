@@ -58,14 +58,24 @@ namespace OneCharter {
                 DrawLine(PEN_SEGMENT, WIDTH_SEGMENT);
 
                 bool isFirstMeasure = true;
-                foreach (BeatMeasure measure in segment.Measures) {
+                foreach (Measure measure in segment.Measures) {
                     // Draw the beginnng point of the measure
                     if (isFirstMeasure) {
                         DrawLine(PEN_MEASURE, WIDTH_MEASURE);
                         isFirstMeasure = false;
                     }
-                    // Draw the beatlines
-                    float beatInterval = PixelPerQuad * 4.0f / measure.QuantBeat;
+                    // Draw the beatlines and elemenets
+                    float beatInterval;
+                    switch (measure) {
+                        case BeatMeasure bMeasure:
+                            beatInterval = PixelPerQuad * 4.0f / bMeasure.QuantBeat;
+                            break;
+                        case OffsetMeasure oMeasure:
+                            beatInterval = PixelPerQuad * (float)(oMeasure.UnitLength / segment.MSPQ);
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
                     for (int i = 1; i < measure.TotalBeats; i++) {
                         if (i % measure.GroupBeats == 0) {
                             DrawLineAt(PEN_MEASURE, WIDTH_MEASURE, measureStartY - beatInterval * i);
@@ -73,10 +83,11 @@ namespace OneCharter {
                             DrawLineAt(PEN_BEAT, WIDTH_BEAT, measureStartY - beatInterval * i);
                         }
                     }
+                    // Draw the elemenets
                     foreach (var elementTuple in measure.Elements) {
                         GetSprite(elementTuple.Item2).DrawOn(g, 0, measureStartY - beatInterval * elementTuple.Item1);
                     }
-                    measureStartY -= PixelPerQuad * (float) measure.QuadLength;
+                    measureStartY -= PixelPerQuad * (float) segment.QuadLengthOf(measure);
                     DrawLine(PEN_MEASURE, WIDTH_MEASURE);
                 }
             }

@@ -52,6 +52,7 @@ namespace OneCharter {
             measureEditForm.Measure = null;
             // Shows the dialog
             DialogResult result = measureEditForm.ShowDialog(this);
+            if (result != DialogResult.OK) return null;
             return measureEditForm.Measure;
         }
 

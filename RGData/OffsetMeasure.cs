@@ -20,6 +20,7 @@ namespace RGData
         /// <param name="length">Length of a measure in ms.</param>
         /// <param name="count">Total amount of measures.</param>
         public OffsetMeasure(double length, int count = 1) {
+            if (count <= 0) throw new ArgumentOutOfRangeException("# of measures should be more than zero!");
             this.length = length;
             totalBeats = count;
         }

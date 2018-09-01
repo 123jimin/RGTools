@@ -103,7 +103,7 @@ namespace RGData {
             return BeatLengthOf(measures[measureIndex]);
         }
 
-        /// <summary>Computes the amount of quads in a measure object in ms.</summary>
+        /// <summary>Computes the amount of quads of a given measure.</summary>
         /// <param name="measure">The measure object which length will be measured.</param>
         /// <returns>Amount of quads in the given measure object.</returns>
         public double QuadLengthOf(Measure measure) {
