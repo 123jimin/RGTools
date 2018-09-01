@@ -35,7 +35,7 @@ namespace RGData {
             public double Time {
                 get => time;
                 set {
-                    // TODO: checks whether value - time is small enough to compute indices easily.
+                    // TODO: checks whether (value - time) is small enough to compute indices easily.
                     SetTime(value);
                 }
             }
@@ -319,7 +319,7 @@ namespace RGData {
                                     case OffsetMeasure oMeasure:
                                         numBeats = measureOffset / oMeasure.UnitLength;
                                         SetLocation(currSegmentInd, currMeasureInd, (int) numBeats,
-                                            measureOffset - (int) numBeats);
+                                            measureOffset - ((int) numBeats) * oMeasure.UnitLength);
                                         return;
                                     default:
                                         throw new NotImplementedException();
